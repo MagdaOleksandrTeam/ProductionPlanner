@@ -6,48 +6,248 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>797</width>
+    <height>599</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuProdukty">
-    <property name="title">
-     <string>Produkty</string>
+  <property name="styleSheet">
+   <string notr="true">background-color: #F6F7FB;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>171</width>
+      <height>571</height>
+     </rect>
     </property>
-    <addaction name="actionNowy_produkt"/>
+    <layout class="QHBoxLayout" name="sidebar">
+     <item>
+      <widget class="QWidget" name="sidebarWidget" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QWidget#sidebarWidget {
+    background-color: #1E3A5F;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+QWidget#sidebarWidget QPushButton {
+    color: white;
+    background-color: transparent;
+    border: 1px solid #AAAAAA;
+    border-radius: 5px;
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+QWidget#sidebarWidget QPushButton:hover {
+    background-color: #3A6EA5;
+    border-color: #888888;
+}
+
+QWidget#sidebarWidget QPushButton:pressed,
+QWidget#sidebarWidget QPushButton:checked {
+    background-color: #2E5C9A;
+    border-color: #666666;
+}</string>
+       </property>
+       <widget class="QPushButton" name="btn_material_mannager">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>30</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Create / Edit material</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_bom">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>100</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>BOM</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_production_orders">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>170</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Production orders</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_mrp_analysis">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>240</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>MRP Analysis</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_schedule_gantt">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>310</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Schedule (Gantt)</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_reports_export">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>380</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Reports / Export</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
    </widget>
-   <addaction name="menuProdukty"/>
+   <widget class="QLabel" name="mainTitle">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>0</y>
+      <width>621</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+      <pointsize>-1</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font-size: 18px;       
+color: #1E3A5F;          
+padding: 8px 12px;
+background-color: #F4F5F7;
+border-radius: 8px;</string>
+    </property>
+    <property name="text">
+     <string>Production Planner</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>169</x>
+      <y>29</y>
+      <width>641</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="mainArea">
+     <item>
+      <widget class="QWidget" name="mainAreaWidget" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: #F6F7FB;
+    border-left: 1px solid #D0D3DA;</string>
+       </property>
+       <widget class="QStackedWidget" name="stackedWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>621</width>
+          <height>521</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QStackedWidget {
+    background-color: white;
+    border: 1px solid #E0E3EB;
+    border-radius: 6px;
+    margin: 8px;
+}</string>
+        </property>
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="page">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
+        <widget class="QWidget" name="page_2"/>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="styleSheet">
+    <string notr="true">QStatusBar {
+    background-color: #2E3B55;
+    color: #FFFFFF;
+    font-size: 12px;
+    padding: 5px 10px;
+}</string>
    </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
-  <action name="actionNowy_produkt">
-   <property name="text">
-    <string>Nowy produkt</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>
