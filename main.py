@@ -1,3 +1,6 @@
+import sys
+from PyQt6.QtWidgets import QApplication
+from main_window import MainWindow
 from models.database import init_db, close_db, get_connection
 from models.material import Material, MaterialRepository
 
@@ -74,3 +77,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
