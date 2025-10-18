@@ -1,183 +1,186 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>materialDialog</class>
- <widget class="QDialog" name="materialDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>400</width>
-    <height>300</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Add / Edit Material</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">QDialog {
-    background-color: #f6f7fb;
-    border-radius: 10px;
-}
+    <class>materialDialog</class>
+    <widget class="QDialog" name="materialDialog">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>400</width>
+                <height>300</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Add / Edit Material</string>
+        </property>
+        <property name="styleSheet">
+            <string notr="true">QDialog {
+                background-color: #f6f7fb;
+                border-radius: 10px;
+                }
 
-QLabel {
-    font-weight: bold;
-    color: #2b3a55;
-}
+                QLabel {
+                font-weight: bold;
+                color: #2b3a55;
+                }
 
-QLineEdit, QComboBox, QTextEdit, QSpinBox {
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    padding: 4px;
-    background-color: #ffffff;
-}
+                QLineEdit, QComboBox, QTextEdit, QSpinBox {
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                padding: 4px;
+                background-color: #ffffff;
+                }
 
-QDialogButtonBox QPushButton {
-    background-color: #2b3a55;
-    color: white;
-    border-radius: 6px;
-    padding: 6px 12px;
-}
+                QDialogButtonBox QPushButton {
+                background-color: #2b3a55;
+                color: white;
+                border-radius: 6px;
+                padding: 6px 12px;
+                }
 
-QDialogButtonBox QPushButton:hover {
-    background-color: #3b4f70;
-}</string>
-  </property>
-  <widget class="QDialogButtonBox" name="MaterialButtonBox">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>240</y>
-     <width>341</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Orientation::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Save</set>
-   </property>
-   <property name="centerButtons">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QWidget" name="formLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>-1</x>
-     <y>-1</y>
-     <width>401</width>
-     <height>241</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="labelName">
-      <property name="text">
-       <string>Name:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="labelQuantity">
-      <property name="text">
-       <string>Quantity:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="labelUnit">
-      <property name="text">
-       <string>Unit:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="labelDescription">
-      <property name="text">
-       <string>Description:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="leName"/>
-    </item>
-    <item row="1" column="1">
-     <widget class="QComboBox" name="cbUnit">
-      <item>
-       <property name="text">
-        <string>pcs.</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>kg</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>m</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>m²</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>m³</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>l</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QTextEdit" name="teDescription"/>
-    </item>
-    <item row="2" column="1">
-     <widget class="QDoubleSpinBox" name="sbQuantity"/>
-    </item>
-   </layout>
-  </widget>
- </widget>
- <resources/>
- <connections>
-  <connection>
-   <sender>MaterialButtonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>materialDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>MaterialButtonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>materialDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+                QDialogButtonBox QPushButton:hover {
+                background-color: #3b4f70;
+                }</string>
+        </property>
+        <layout class="QVBoxLayout" name="mainLayout">
+            <property name="spacing">
+                <number>10</number>
+            </property>
+            <property name="leftMargin">
+                <number>20</number>
+            </property>
+            <property name="topMargin">
+                <number>20</number>
+            </property>
+            <property name="rightMargin">
+                <number>20</number>
+            </property>
+            <property name="bottomMargin">
+                <number>20</number>
+            </property>
+            <item>
+                <layout class="QFormLayout" name="formLayout">
+                    <item row="0" column="0">
+                        <widget class="QLabel" name="labelName">
+                            <property name="text">
+                                <string>Name:</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="2" column="0">
+                        <widget class="QLabel" name="labelQuantity">
+                            <property name="text">
+                                <string>Quantity:</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="1" column="0">
+                        <widget class="QLabel" name="labelUnit">
+                            <property name="text">
+                                <string>Unit:</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="3" column="0">
+                        <widget class="QLabel" name="labelDescription">
+                            <property name="text">
+                                <string>Description:</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="0" column="1">
+                        <widget class="QLineEdit" name="leName" />
+                    </item>
+                    <item row="1" column="1">
+                        <widget class="QComboBox" name="cbUnit">
+                            <item>
+                                <property name="text">
+                                    <string>pcs.</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>kg</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>m</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>m²</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>m³</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>l</string>
+                                </property>
+                            </item>
+                        </widget>
+                    </item>
+                    <item row="3" column="1">
+                        <widget class="QTextEdit" name="teDescription" />
+                    </item>
+                    <item row="2" column="1">
+                        <widget class="QDoubleSpinBox" name="sbQuantity" />
+                    </item>
+                </layout>
+            </item>
+            <item>
+                <widget class="QDialogButtonBox" name="MaterialButtonBox">
+                    <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="standardButtons">
+                        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
+                    </property>
+                    <property name="centerButtons">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+            </item>
+        </layout>
+    </widget>
+    <resources />
+    <connections>
+        <connection>
+            <sender>MaterialButtonBox</sender>
+            <signal>accepted()</signal>
+            <receiver>materialDialog</receiver>
+            <slot>accept()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>248</x>
+                    <y>254</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>157</x>
+                    <y>274</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>MaterialButtonBox</sender>
+            <signal>rejected()</signal>
+            <receiver>materialDialog</receiver>
+            <slot>reject()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>316</x>
+                    <y>260</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>286</x>
+                    <y>274</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
 </ui>
