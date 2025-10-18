@@ -28,8 +28,7 @@ class MainWindow(QMainWindow):
             self.tableMaterial.setItem(row_position, 0, QTableWidgetItem(str(material.id)))
             self.tableMaterial.setItem(row_position, 1, QTableWidgetItem(material.name))
             self.tableMaterial.setItem(row_position, 2, QTableWidgetItem(material.unit))
-            self.tableMaterial.setItem(row_position, 3, QTableWidgetItem(getattr(material, "description", "")))
-            self.tableMaterial.setItem(row_position, 4, QTableWidgetItem(str(material.quantity)))
+            self.tableMaterial.setItem(row_position, 3, QTableWidgetItem(str(material.quantity)))
             
     def add_material(self):
         dialog = MaterialDialog()

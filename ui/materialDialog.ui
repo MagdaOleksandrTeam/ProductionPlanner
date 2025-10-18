@@ -22,7 +22,7 @@
                 QLabel {
                 font-weight: bold;
                 color: #2b3a55;
-                }
+
 
                 QLineEdit, QComboBox, QTextEdit, QSpinBox {
                 border: 1px solid #ccc;
@@ -81,13 +81,7 @@
                             </property>
                         </widget>
                     </item>
-                    <item row="3" column="0">
-                        <widget class="QLabel" name="labelDescription">
-                            <property name="text">
-                                <string>Description:</string>
-                            </property>
-                        </widget>
-                    </item>
+
                     <item row="0" column="1">
                         <widget class="QLineEdit" name="leName" />
                     </item>
@@ -125,9 +119,7 @@
                             </item>
                         </widget>
                     </item>
-                    <item row="3" column="1">
-                        <widget class="QTextEdit" name="teDescription" />
-                    </item>
+
                     <item row="2" column="1">
                         <widget class="QDoubleSpinBox" name="sbQuantity" />
                     </item>

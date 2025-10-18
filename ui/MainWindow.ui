@@ -1,446 +1,451 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>955</width>
-    <height>630</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: #F6F7FB;</string>
-  </property>
-  <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4">
-    <item>
-     <layout class="QHBoxLayout" name="sidebar">
-      <item>
-       <widget class="QWidget" name="sidebarWidget" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>180</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QWidget#sidebarWidget {
-    background-color: #1E3A5F;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-}
-
-QWidget#sidebarWidget QPushButton {
-    color: white;
-    background-color: transparent;
-    border: 1px solid #AAAAAA;
-    border-radius: 5px;
-    text-align: left;
-    padding: 8px 12px;
-    font-size: 14px;
-}
-
-QWidget#sidebarWidget QPushButton:hover {
-    background-color: #3A6EA5;
-    border-color: #888888;
-}
-
-QWidget#sidebarWidget QPushButton:pressed,
-QWidget#sidebarWidget QPushButton:checked {
-    background-color: #2E5C9A;
-    border-color: #666666;
-}</string>
-        </property>
-        <widget class="QPushButton" name="btn_material_mannager">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>171</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Create / Edit material</string>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="btn_bom">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>100</y>
-           <width>171</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>BOM</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="btn_production_orders">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>170</y>
-           <width>171</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string>Production orders</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="btn_mrp_analysis">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>240</y>
-           <width>171</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>MRP Analysis</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="btn_schedule_gantt">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>310</y>
-           <width>171</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Schedule (Gantt)</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="btn_reports_export">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>380</y>
-           <width>171</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Reports / Export</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="mainArea">
-      <item>
-       <widget class="QWidget" name="mainAreaWidget" native="true">
-        <property name="styleSheet">
-         <string notr="true">background-color: #F6F7FB;
-    border-left: 2px solid #D0D3DA;</string>
-        </property>
-        <widget class="QStackedWidget" name="stackedWidget">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>40</y>
-           <width>761</width>
-           <height>571</height>
-          </rect>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QStackedWidget {
-    background-color: white;
-    border: 1px solid #E0E3EB;
-    border-radius: 6px;
-    margin: 8px;
-}</string>
-         </property>
-         <property name="currentIndex">
-          <number>1</number>
-         </property>
-         <widget class="QWidget" name="pageDashboard">
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-         </widget>
-         <widget class="QWidget" name="pageMaterial">
-          <widget class="QWidget" name="verticalLayoutWidget">
-           <property name="geometry">
+    <class>MainWindow</class>
+    <widget class="QMainWindow" name="MainWindow">
+        <property name="geometry">
             <rect>
-             <x>-10</x>
-             <y>-10</y>
-             <width>771</width>
-             <height>541</height>
+                <x>0</x>
+                <y>0</y>
+                <width>955</width>
+                <height>630</height>
             </rect>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>659</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font-size: 18px;
-font-weight: bold;
-color: #1E3A5F;
-background-color: #F4F5F7;
-border-radius: 8px;</string>
-              </property>
-              <property name="text">
-               <string>Materials</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTableWidget" name="tableMaterial">
-              <property name="styleSheet">
-               <string notr="true">QTableWidget {
-    background-color: #ffffff;
-    alternate-background-color: #f2f5fa;
-    gridline-color: #d0d4da;
-	font-size: 13px;
-    border: 1px solid #ccc;
-}
+        </property>
+        <property name="windowTitle">
+            <string>MainWindow</string>
+        </property>
+        <property name="styleSheet">
+            <string notr="true">background-color: #F6F7FB;</string>
+        </property>
+        <widget class="QWidget" name="centralwidget">
+            <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4">
+                <item>
+                    <layout class="QHBoxLayout" name="sidebar">
+                        <item>
+                            <widget class="QWidget" name="sidebarWidget" native="true">
+                                <property name="minimumSize">
+                                    <size>
+                                        <width>180</width>
+                                        <height>0</height>
+                                    </size>
+                                </property>
+                                <property name="maximumSize">
+                                    <size>
+                                        <width>200</width>
+                                        <height>16777215</height>
+                                    </size>
+                                </property>
+                                <property name="styleSheet">
+                                    <string notr="true">QWidget#sidebarWidget {
+                                        background-color: #1E3A5F;
+                                        border-top-right-radius: 15px;
+                                        border-bottom-right-radius: 15px;
+                                        }
 
-QHeaderView::section {
-    background-color: #e6e9ef;
-    font-weight: bold;
-    font-size: 14px;
-    color: #333333;
-    padding: 4px;
-    border: 1px solid #d0d4da;
-}</string>
-              </property>
-              <property name="editTriggers">
-               <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
-              </property>
-              <property name="alternatingRowColors">
-               <bool>true</bool>
-              </property>
-              <property name="selectionBehavior">
-               <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
-              </property>
-              <property name="columnCount">
-               <number>5</number>
-              </property>
-              <attribute name="horizontalHeaderStretchLastSection">
-               <bool>true</bool>
-              </attribute>
-              <column>
-               <property name="text">
-                <string>Material id</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Unit</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Description</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Quantity in stock</string>
-               </property>
-              </column>
-             </widget>
-            </item>
-            <item>
-             <widget class="QWidget" name="horizontalLayout_4" native="true">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
-    background-color: #3A5F8F;
-    color: #FFFFFF;
-    font-weight: bold;
-    border-radius: 4px;
-    padding: 6px 10px;
-}
+                                        QWidget#sidebarWidget QPushButton {
+                                        color: white;
+                                        background-color: transparent;
+                                        border: 1px solid #AAAAAA;
+                                        border-radius: 5px;
+                                        text-align: left;
+                                        padding: 8px 12px;
+                                        font-size: 14px;
+                                        }
 
-QPushButton:hover {
-    background-color: #2E4B70;
-}
+                                        QWidget#sidebarWidget QPushButton:hover {
+                                        background-color: #3A6EA5;
+                                        border-color: #888888;
+                                        }
 
-QPushButton:pressed {
-    background-color: #1F344D;
-}
+                                        QWidget#sidebarWidget QPushButton:pressed,
+                                        QWidget#sidebarWidget QPushButton:checked {
+                                        background-color: #2E5C9A;
+                                        border-color: #666666;
+                                        }</string>
+                                </property>
+                                <widget class="QPushButton" name="btn_material_mannager">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>10</x>
+                                            <y>30</y>
+                                            <width>171</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>Create / Edit material</string>
+                                    </property>
+                                </widget>
+                                <widget class="QPushButton" name="btn_bom">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>10</x>
+                                            <y>100</y>
+                                            <width>171</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>BOM</string>
+                                    </property>
+                                    <property name="checkable">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                                <widget class="QPushButton" name="btn_production_orders">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>10</x>
+                                            <y>170</y>
+                                            <width>171</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="styleSheet">
+                                        <string notr="true" />
+                                    </property>
+                                    <property name="text">
+                                        <string>Production orders</string>
+                                    </property>
+                                    <property name="checkable">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                                <widget class="QPushButton" name="btn_mrp_analysis">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>10</x>
+                                            <y>240</y>
+                                            <width>171</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>MRP Analysis</string>
+                                    </property>
+                                    <property name="checkable">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                                <widget class="QPushButton" name="btn_schedule_gantt">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>10</x>
+                                            <y>310</y>
+                                            <width>171</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>Schedule (Gantt)</string>
+                                    </property>
+                                    <property name="checkable">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                                <widget class="QPushButton" name="btn_reports_export">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>10</x>
+                                            <y>380</y>
+                                            <width>171</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>Reports / Export</string>
+                                    </property>
+                                    <property name="checkable">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                            </widget>
+                        </item>
+                    </layout>
+                </item>
+                <item>
+                    <layout class="QHBoxLayout" name="mainArea">
+                        <item>
+                            <widget class="QWidget" name="mainAreaWidget" native="true">
+                                <property name="styleSheet">
+                                    <string notr="true">background-color: #F6F7FB;
+                                        border-left: 2px solid #D0D3DA;</string>
+                                </property>
+                                <widget class="QStackedWidget" name="stackedWidget">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>0</x>
+                                            <y>40</y>
+                                            <width>761</width>
+                                            <height>571</height>
+                                        </rect>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="styleSheet">
+                                        <string notr="true">QStackedWidget {
+                                            background-color: white;
+                                            border: 1px solid #E0E3EB;
+                                            border-radius: 6px;
+                                            margin: 8px;
+                                            }</string>
+                                    </property>
+                                    <property name="currentIndex">
+                                        <number>1</number>
+                                    </property>
+                                    <widget class="QWidget" name="pageDashboard">
+                                        <property name="styleSheet">
+                                            <string notr="true" />
+                                        </property>
+                                    </widget>
+                                    <widget class="QWidget" name="pageMaterial">
+                                        <widget class="QWidget" name="verticalLayoutWidget">
+                                            <property name="geometry">
+                                                <rect>
+                                                    <x>-10</x>
+                                                    <y>-10</y>
+                                                    <width>771</width>
+                                                    <height>541</height>
+                                                </rect>
+                                            </property>
+                                            <layout class="QVBoxLayout" name="verticalLayout"
+                                                stretch="0,1,0">
+                                                <item>
+                                                    <widget class="QLabel" name="label">
+                                                        <property name="sizePolicy">
+                                                            <sizepolicy hsizetype="Expanding"
+                                                                vsizetype="Fixed">
+                                                                <horstretch>0</horstretch>
+                                                                <verstretch>0</verstretch>
+                                                            </sizepolicy>
+                                                        </property>
+                                                        <property name="minimumSize">
+                                                            <size>
+                                                                <width>659</width>
+                                                                <height>30</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="styleSheet">
+                                                            <string notr="true">font-size: 18px;
+                                                                font-weight: bold;
+                                                                color: #1E3A5F;
+                                                                background-color: #F4F5F7;
+                                                                border-radius: 8px;</string>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Materials</string>
+                                                        </property>
+                                                        <property name="alignment">
+                                                            <set>Qt::AlignmentFlag::AlignCenter</set>
+                                                        </property>
+                                                    </widget>
+                                                </item>
+                                                <item>
+                                                    <widget class="QTableWidget"
+                                                        name="tableMaterial">
+                                                        <property name="styleSheet">
+                                                            <string notr="true">QTableWidget {
+                                                                background-color: #ffffff;
+                                                                alternate-background-color: #f2f5fa;
+                                                                gridline-color: #d0d4da;
+                                                                font-size: 13px;
+                                                                border: 1px solid #ccc;
+                                                                }
 
-QPushButton:pressed {
-    background-color: #2a5d8f;
-}</string>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
-               <item>
-                <widget class="QPushButton" name="btn_addMaterial">
-                 <property name="text">
-                  <string>Add</string>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btn_editMaterial">
-                 <property name="text">
-                  <string>Edit</string>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btn_deleteMaterial">
-                 <property name="text">
-                  <string>Delete</string>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-         <widget class="QWidget" name="pageBOM"/>
-         <widget class="QWidget" name="pageOrders"/>
-         <widget class="QWidget" name="pageMRP"/>
-         <widget class="QWidget" name="pageSchedule"/>
-         <widget class="QWidget" name="pageExport"/>
+                                                                QHeaderView::section {
+                                                                background-color: #e6e9ef;
+                                                                font-weight: bold;
+                                                                font-size: 14px;
+                                                                color: #333333;
+                                                                padding: 4px;
+                                                                border: 1px solid #d0d4da;
+                                                                }</string>
+                                                        </property>
+                                                        <property name="editTriggers">
+                                                            <set>QAbstractItemView::NoEditTriggers</set>
+                                                        </property>
+                                                        <property name="alternatingRowColors">
+                                                            <bool>true</bool>
+                                                        </property>
+                                                        <property name="selectionBehavior">
+                                                            <enum>QAbstractItemView::SelectRows</enum>
+                                                        </property>
+                                                        <property name="columnCount">
+                                                            <number>4</number>
+                                                        </property>
+                                                        <attribute
+                                                            name="horizontalHeaderStretchLastSection">
+                                                            <bool>true</bool>
+                                                        </attribute>
+                                                        <column>
+                                                            <property name="text">
+                                                                <string>Material id</string>
+                                                            </property>
+                                                        </column>
+                                                        <column>
+                                                            <property name="text">
+                                                                <string>Name</string>
+                                                            </property>
+                                                        </column>
+                                                        <column>
+                                                            <property name="text">
+                                                                <string>Unit</string>
+                                                            </property>
+                                                        </column>
+                                                        <column>
+                                                            <property name="text">
+                                                                <string>Quantity in stock</string>
+                                                            </property>
+                                                        </column>
+                                                    </widget>
+                                                </item>
+                                                <item>
+                                                    <widget class="QWidget"
+                                                        name="horizontalLayout_4" native="true">
+                                                        <property name="sizePolicy">
+                                                            <sizepolicy hsizetype="Expanding"
+                                                                vsizetype="Minimum">
+                                                                <horstretch>0</horstretch>
+                                                                <verstretch>0</verstretch>
+                                                            </sizepolicy>
+                                                        </property>
+                                                        <property name="minimumSize">
+                                                            <size>
+                                                                <width>0</width>
+                                                                <height>0</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="styleSheet">
+                                                            <string notr="true">QPushButton {
+                                                                background-color: #3A5F8F;
+                                                                color: #FFFFFF;
+                                                                font-weight: bold;
+                                                                border-radius: 4px;
+                                                                padding: 6px 10px;
+                                                                }
+
+                                                                QPushButton:hover {
+                                                                background-color: #2E4B70;
+                                                                }
+
+                                                                QPushButton:pressed {
+                                                                background-color: #1F344D;
+                                                                }
+
+                                                                QPushButton:pressed {
+                                                                background-color: #2a5d8f;
+                                                                }</string>
+                                                        </property>
+                                                        <layout class="QHBoxLayout"
+                                                            name="horizontalLayout_3">
+                                                            <item>
+                                                                <widget class="QPushButton"
+                                                                    name="btn_addMaterial">
+                                                                    <property name="text">
+                                                                        <string>Add</string>
+                                                                    </property>
+                                                                    <property name="flat">
+                                                                        <bool>true</bool>
+                                                                    </property>
+                                                                </widget>
+                                                            </item>
+                                                            <item>
+                                                                <widget class="QPushButton"
+                                                                    name="btn_editMaterial">
+                                                                    <property name="text">
+                                                                        <string>Edit</string>
+                                                                    </property>
+                                                                    <property name="flat">
+                                                                        <bool>true</bool>
+                                                                    </property>
+                                                                </widget>
+                                                            </item>
+                                                            <item>
+                                                                <widget class="QPushButton"
+                                                                    name="btn_deleteMaterial">
+                                                                    <property name="text">
+                                                                        <string>Delete</string>
+                                                                    </property>
+                                                                    <property name="flat">
+                                                                        <bool>true</bool>
+                                                                    </property>
+                                                                </widget>
+                                                            </item>
+                                                        </layout>
+                                                    </widget>
+                                                </item>
+                                            </layout>
+                                        </widget>
+                                    </widget>
+                                    <widget class="QWidget" name="pageBOM" />
+                                    <widget class="QWidget" name="pageOrders" />
+                                    <widget class="QWidget" name="pageMRP" />
+                                    <widget class="QWidget" name="pageSchedule" />
+                                    <widget class="QWidget" name="pageExport" />
+                                </widget>
+                                <widget class="QLabel" name="mainTitle">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>80</x>
+                                            <y>-10</y>
+                                            <width>600</width>
+                                            <height>51</height>
+                                        </rect>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>600</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                    <property name="styleSheet">
+                                        <string notr="true">font-size: 20px;
+                                            font-weight: bold;
+                                            color: #1E3A5F;
+                                            padding: 8px 12px;
+                                            background-color: #F4F5F7;
+                                            border-radius: 8px;</string>
+                                    </property>
+                                    <property name="text">
+                                        <string>Production Planner</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                                    </property>
+                                </widget>
+                            </widget>
+                        </item>
+                    </layout>
+                </item>
+            </layout>
         </widget>
-        <widget class="QLabel" name="mainTitle">
-         <property name="geometry">
-          <rect>
-           <x>80</x>
-           <y>-10</y>
-           <width>600</width>
-           <height>51</height>
-          </rect>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>600</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">font-size: 20px;
-font-weight: bold;       
-color: #1E3A5F;          
-padding: 8px 12px;
-background-color: #F4F5F7;
-border-radius: 8px;</string>
-         </property>
-         <property name="text">
-          <string>Production Planner</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QStatusBar" name="statusbar">
-   <property name="layoutDirection">
-    <enum>Qt::LayoutDirection::LeftToRight</enum>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QStatusBar {
-    background-color: #3C4B6E;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 5px 10px;
-}
+        <widget class="QStatusBar" name="statusbar">
+            <property name="layoutDirection">
+                <enum>Qt::LayoutDirection::LeftToRight</enum>
+            </property>
+            <property name="styleSheet">
+                <string notr="true">QStatusBar {
+                    background-color: #3C4B6E;
+                    font-size: 12px;
+                    font-weight: bold;
+                    padding: 5px 10px;
+                    }
 
-QStatusBar[status='success'] { color: #7DFF7A; }
-QStatusBar[status='error'] { color: red; }
-QStatusBar[status='info'] { color: #00BFFF; }</string>
-   </property>
-  </widget>
- </widget>
- <resources/>
- <connections/>
+                    QStatusBar[status='success'] { color: #7DFF7A; }
+                    QStatusBar[status='error'] { color: red; }
+                    QStatusBar[status='info'] { color: #00BFFF; }</string>
+            </property>
+        </widget>
+    </widget>
+    <resources />
+    <connections />
 </ui>

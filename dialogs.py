@@ -12,12 +12,10 @@ class MaterialDialog(QDialog):
             self.leName.setText(material.name)
             self.cbUnit.setCurrentText(material.unit)
             self.sbQuantity.setValue(material.quantity)
-            self.teDescription.setPlainText(getattr(material, "description", ""))
         else:
             self.leName.setText("")
             self.cbUnit.setCurrentIndex(0)
             self.sbQuantity.setValue(0)
-            self.teDescription.setPlainText("")
 
         self.MaterialButtonBox.accepted.connect(self.accept)
         self.MaterialButtonBox.rejected.connect(self.reject)
