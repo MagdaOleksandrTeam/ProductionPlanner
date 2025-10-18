@@ -242,7 +242,7 @@ border-radius: 8px;</string>
              </widget>
             </item>
             <item>
-             <widget class="QTableWidget" name="tableWidget">
+             <widget class="QTableWidget" name="tableMaterial">
               <property name="styleSheet">
                <string notr="true">QTableWidget {
     background-color: #ffffff;
@@ -424,13 +424,20 @@ border-radius: 8px;</string>
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar">
+   <property name="layoutDirection">
+    <enum>Qt::LayoutDirection::LeftToRight</enum>
+   </property>
    <property name="styleSheet">
     <string notr="true">QStatusBar {
-    background-color: #2E3B55;
-    color: #FFFFFF;
+    background-color: #3C4B6E;
     font-size: 12px;
+    font-weight: bold;
     padding: 5px 10px;
-}</string>
+}
+
+QStatusBar[status='success'] { color: #7DFF7A; }
+QStatusBar[status='error'] { color: red; }
+QStatusBar[status='info'] { color: #00BFFF; }</string>
    </property>
   </widget>
  </widget>

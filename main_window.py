@@ -1,5 +1,8 @@
 from PyQt6 import uic
-from PyQt6.QtWidgets import QMainWindow
+from PyQt6.QtCore import QTimer
+from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem
+from models.material import Material, MaterialRepository
+from dialogs import MaterialDialog, ConfirmDialog
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -7,6 +10,77 @@ class MainWindow(QMainWindow):
         uic.loadUi("ui/MainWindow.ui", self)
 
         self.btn_addMaterial.clicked.connect(self.add_material)
+        self.btn_editMaterial.clicked.connect(self.edit_material)
+        self.btn_deleteMaterial.clicked.connect(self.delete_material)
+        
+        self.load_materials()
 
+        self.show_status("Production Planner started!", "info")
+
+    def load_materials(self):
+        self.tableMaterial.setRowCount(0)
+
+        materials = MaterialRepository.get_all_materials()
+
+        for material in materials:
+            row_position = self.tableMaterial.rowCount()
+            self.tableMaterial.insertRow(row_position)
+            self.tableMaterial.setItem(row_position, 0, QTableWidgetItem(str(material.id)))
+            self.tableMaterial.setItem(row_position, 1, QTableWidgetItem(material.name))
+            self.tableMaterial.setItem(row_position, 2, QTableWidgetItem(material.unit))
+            self.tableMaterial.setItem(row_position, 3, QTableWidgetItem(getattr(material, "description", "")))
+            self.tableMaterial.setItem(row_position, 4, QTableWidgetItem(str(material.quantity)))
+            
     def add_material(self):
-        print("Kliknięto Add!")
+        dialog = MaterialDialog()
+        if dialog.exec():  # clicked OK
+            new_material = dialog.get_material()
+            MaterialRepository.add_material(new_material)
+            self.load_materials() #reload
+            self.show_status("Material added successfully!", "success")
+        
+    def edit_material(self):
+        selected_rows = self.tableMaterial.selectionModel().selectedRows()
+        if not selected_rows:
+            self.show_status("Please select a material to edit!", "error")
+            return
+
+        row = selected_rows[0].row()
+        material_id = int(self.tableMaterial.item(row, 0).text())
+        material = MaterialRepository.get_material_by_id(material_id)
+
+        dialog = MaterialDialog(material)
+        if dialog.exec():  # OK
+            updated_material = dialog.get_material()
+            updated_material.id = material.id
+            MaterialRepository.update_material(updated_material)
+            self.load_materials()
+            self.show_status("Material updated successfully!", "success")
+        
+    def delete_material(self):
+        selected_rows = self.tableMaterial.selectionModel().selectedRows()
+        if not selected_rows:
+            self.show_status("Please select a material to delete!", "error")
+            return
+
+        row = selected_rows[0].row()
+        material_id = int(self.tableMaterial.item(row, 0).text())
+        material = MaterialRepository.get_material_by_id(material_id)
+
+        dialog = ConfirmDialog(f"Are you sure you want to delete material: '{material.name}'?")
+        if dialog.exec():  # Yes
+            MaterialRepository.delete_material(material)
+            self.load_materials()
+            self.show_status("Material deleted successfully!", "success")
+        
+    def show_status(self, message: str, status: str = "info", timeout: int = 5000):
+        """
+        Wyświetla komunikat w statusbar.
+        status: "success", "error", "info"
+        """
+        self.statusbar.setProperty("status", status)
+        self.statusbar.showMessage(message, timeout)
+
+        # Wymusza pełne odświeżenie stylu
+        QTimer.singleShot(0, lambda: self.statusbar.style().unpolish(self.statusbar))
+        QTimer.singleShot(0, lambda: self.statusbar.style().polish(self.statusbar))

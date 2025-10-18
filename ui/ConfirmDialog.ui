@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ConfirmDeletion</class>
- <widget class="QDialog" name="ConfirmDeletion">
+ <class>ConfirmButtonBox</class>
+ <widget class="QDialog" name="ConfirmButtonBox">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -64,7 +64,7 @@
   <connection>
    <sender>btn_confirm_dialog</sender>
    <signal>accepted()</signal>
-   <receiver>ConfirmDeletion</receiver>
+   <receiver>ConfirmButtonBox</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -80,7 +80,7 @@
   <connection>
    <sender>btn_confirm_dialog</sender>
    <signal>rejected()</signal>
-   <receiver>ConfirmDeletion</receiver>
+   <receiver>ConfirmButtonBox</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
