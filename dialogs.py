@@ -2,7 +2,7 @@ from PyQt6 import uic
 from PyQt6.QtWidgets import QDialog
 from models.material import Material
 
-# Material Dialog
+#MaterialView Add/Edit
 class MaterialDialog(QDialog):
     def __init__(self, material: Material = None):
         super().__init__()
@@ -29,11 +29,11 @@ class MaterialDialog(QDialog):
         )
 
 
-# Confirm Dialog
+# MaterialView Delete
 class ConfirmDialog(QDialog):
     def __init__(self, message: str):
         super().__init__()
         uic.loadUi("ui/ConfirmDialog.ui", self)
-        self.labelMessage.setText(message)
-        self.ConfirmButtonBox.accepted.connect(self.accept)
-        self.ConfirmButtonBox.rejected.connect(self.reject)
+        self.lblMessage.setText(message)
+        self.btn_confirm_dialog.accepted.connect(self.accept)
+        self.btn_confirm_dialog.rejected.connect(self.reject)

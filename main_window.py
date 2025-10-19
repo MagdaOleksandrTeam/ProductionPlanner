@@ -1,85 +1,63 @@
 from PyQt6 import uic
 from PyQt6.QtCore import QTimer
-from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem
-from models.material import Material, MaterialRepository
-from dialogs import MaterialDialog, ConfirmDialog
+from PyQt6.QtWidgets import QMainWindow, QButtonGroup
+from views import DashboardView, MaterialView, BOMView, OrdersView, MRPView, ScheduleView, ReportsView
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("ui/MainWindow.ui", self)
 
-        self.btn_addMaterial.clicked.connect(self.add_material)
-        self.btn_editMaterial.clicked.connect(self.edit_material)
-        self.btn_deleteMaterial.clicked.connect(self.delete_material)
-        
-        self.load_materials()
+        self.dashboard_page = DashboardView()
+        self.material_page = MaterialView()
+        self.bom_page = BOMView()
+        self.orders_page = OrdersView()
+        self.mrp_page = MRPView()
+        self.schedule_page = ScheduleView()
+        self.reports_page = ReportsView()
 
+        # Map buttons to pages
+        self.pages = {
+            self.btn_dashboard: self.dashboard_page,
+            self.btn_material: self.material_page,
+            self.btn_bom: self.bom_page,
+            self.btn_orders: self.orders_page,
+            self.btn_mrp: self.mrp_page,
+            self.btn_schedule: self.schedule_page,
+            self.btn_reports: self.reports_page
+        }
+
+        # Button group for exclusive selection
+        self.sidebar_group = QButtonGroup()
+        self.sidebar_group.setExclusive(True)
+        for btn in self.pages.keys():
+            self.sidebar_group.addButton(btn)
+
+        # Add pages to stackedWidget
+        for page in self.pages.values():
+            self.stackedWidget.addWidget(page)
+            page.statusMessage.connect(self.show_status)
+
+        for btn, page in self.pages.items():
+            btn.clicked.connect(lambda checked, p=page: self.switch_page(p))
+
+        # default page
+        self.stackedWidget.setCurrentWidget(self.dashboard_page)
+        self.btn_dashboard.setChecked(True)
+        self.dashboard_page.load_view()
+
+        # Initial app start message
         self.show_status("Production Planner started!", "info")
 
-    def load_materials(self):
-        self.tableMaterial.setRowCount(0)
+    def switch_page(self, page):
+        self.stackedWidget.setCurrentWidget(page)
+        page.load_view()  # emit status when user switches
 
-        materials = MaterialRepository.get_all_materials()
-
-        for material in materials:
-            row_position = self.tableMaterial.rowCount()
-            self.tableMaterial.insertRow(row_position)
-            self.tableMaterial.setItem(row_position, 0, QTableWidgetItem(str(material.id)))
-            self.tableMaterial.setItem(row_position, 1, QTableWidgetItem(material.name))
-            self.tableMaterial.setItem(row_position, 2, QTableWidgetItem(material.unit))
-            self.tableMaterial.setItem(row_position, 3, QTableWidgetItem(str(material.quantity)))
-            
-    def add_material(self):
-        dialog = MaterialDialog()
-        if dialog.exec():  # clicked OK
-            new_material = dialog.get_material()
-            MaterialRepository.add_material(new_material)
-            self.load_materials() #reload
-            self.show_status("Material added successfully!", "success")
-        
-    def edit_material(self):
-        selected_rows = self.tableMaterial.selectionModel().selectedRows()
-        if not selected_rows:
-            self.show_status("Please select a material to edit!", "error")
-            return
-
-        row = selected_rows[0].row()
-        material_id = int(self.tableMaterial.item(row, 0).text())
-        material = MaterialRepository.get_material_by_id(material_id)
-
-        dialog = MaterialDialog(material)
-        if dialog.exec():  # OK
-            updated_material = dialog.get_material()
-            updated_material.id = material.id
-            MaterialRepository.update_material(updated_material)
-            self.load_materials()
-            self.show_status("Material updated successfully!", "success")
-        
-    def delete_material(self):
-        selected_rows = self.tableMaterial.selectionModel().selectedRows()
-        if not selected_rows:
-            self.show_status("Please select a material to delete!", "error")
-            return
-
-        row = selected_rows[0].row()
-        material_id = int(self.tableMaterial.item(row, 0).text())
-        material = MaterialRepository.get_material_by_id(material_id)
-
-        dialog = ConfirmDialog(f"Are you sure you want to delete material: '{material.name}'?")
-        if dialog.exec():  # Yes
-            MaterialRepository.delete_material(material)
-            self.load_materials()
-            self.show_status("Material deleted successfully!", "success")
-        
     def show_status(self, message: str, status: str = "info", timeout: int = 5000):
-        """
-        Wyświetla komunikat w statusbar.
-        status: "success", "error", "info"
-        """
         self.statusbar.setProperty("status", status)
         self.statusbar.showMessage(message, timeout)
 
-        # Wymusza pełne odświeżenie stylu
+        # Full style reload to update colors
         QTimer.singleShot(0, lambda: self.statusbar.style().unpolish(self.statusbar))
         QTimer.singleShot(0, lambda: self.statusbar.style().polish(self.statusbar))
