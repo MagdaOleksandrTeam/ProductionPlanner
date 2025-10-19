@@ -58,6 +58,7 @@ def init_db():
     # Import here to avoid circular imports
     from .material import MaterialRepository
     from .product import ProductRepository
+    from .bom import BOMRepository
     
     # Initialize tables for all repositories - this will create the DB file properly
     
@@ -66,5 +67,8 @@ def init_db():
         
     ProductRepository.init_table()
     print("Products table initialized.")
+    
+    BOMRepository.init_table()
+    print("BOM table initialized.")
     
     print("Database initialization completed successfully!")

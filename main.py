@@ -4,6 +4,7 @@ from main_window import MainWindow
 from models.database import init_db, close_db, get_connection
 from models.material import Material, MaterialRepository
 from models.product import Product, ProductRepository
+from models.bom import BOM, BOMRepository
 
 def showcase_materials():
     """Showcase function to demonstrate Material model capabilities."""
@@ -166,6 +167,157 @@ def showcase_products():
     ProductRepository.print_all_products()
 
 
+def showcase_bom():
+    """Showcase function to demonstrate BOM model capabilities."""
+    print("\n" + "="*60)
+    print("BOM MODEL SHOWCASE")
+    print("="*60)
+    
+    # Check if BOM entries already exist to avoid duplicates
+    existing_bom = BOMRepository.get_all_bom()
+    
+    if not existing_bom:
+        # Get existing products and materials to create BOM entries
+        table = ProductRepository.get_product_by_name("Table")
+        chair = ProductRepository.get_product_by_name("Chair")
+        cabinet = ProductRepository.get_product_by_name("Cabinet")
+        
+        steel = MaterialRepository.get_material_by_name("Steel")
+        wood = MaterialRepository.get_material_by_name("Wood")
+        plastic = MaterialRepository.get_material_by_name("Plastic")
+        
+        if table and chair and cabinet and steel and wood and plastic:
+            # Create BOM entries: what materials are needed for each product
+            
+            # Table recipe: 2.0 m³ Wood + 5.0 kg Steel
+            bom1 = BOM(id=0, product_id=table.id, material_id=wood.id, quantity_needed=2.0)
+            bom2 = BOM(id=0, product_id=table.id, material_id=steel.id, quantity_needed=5.0)
+            
+            # Chair recipe: 0.5 m³ Wood + 2.0 kg Steel + 1.0 kg Plastic
+            bom3 = BOM(id=0, product_id=chair.id, material_id=wood.id, quantity_needed=0.5)
+            bom4 = BOM(id=0, product_id=chair.id, material_id=steel.id, quantity_needed=2.0)
+            bom5 = BOM(id=0, product_id=chair.id, material_id=plastic.id, quantity_needed=1.0)
+            
+            # Cabinet recipe: 3.0 m³ Wood + 8.0 kg Steel
+            bom6 = BOM(id=0, product_id=cabinet.id, material_id=wood.id, quantity_needed=3.0)
+            bom7 = BOM(id=0, product_id=cabinet.id, material_id=steel.id, quantity_needed=8.0)
+            
+            # Add BOM entries to database
+            BOMRepository.add_bom(bom1)
+            BOMRepository.add_bom(bom2)
+            BOMRepository.add_bom(bom3)
+            BOMRepository.add_bom(bom4)
+            BOMRepository.add_bom(bom5)
+            BOMRepository.add_bom(bom6)
+            BOMRepository.add_bom(bom7)
+            
+            print("BOM entries added to database!")
+        else:
+            print("Could not create BOM entries - missing products or materials!")
+    else:
+        print("BOM entries already exist in database.")
+    
+    # Print all BOM entries
+    BOMRepository.print_all_bom()
+    
+    # Demonstrate BOM query functionality
+    print("\n" + "="*50)
+    print("BOM QUERY FUNCTIONALITY SHOWCASE")
+    print("="*50)
+    
+    # Get BOM for specific products
+    table = ProductRepository.get_product_by_name("Table")
+    if table:
+        print(f"\n1. Materials needed for '{table.name}':")
+        table_bom = BOMRepository.get_bom_by_product_id(table.id)
+        for bom_entry in table_bom:
+            material = MaterialRepository.get_material_by_id(bom_entry.material_id)
+            if material:
+                print(f"   - {bom_entry.quantity_needed} {material.unit} of {material.name}")
+    
+    chair = ProductRepository.get_product_by_name("Chair")
+    if chair:
+        print(f"\n2. Materials needed for '{chair.name}':")
+        chair_bom = BOMRepository.get_bom_by_product_id(chair.id)
+        for bom_entry in chair_bom:
+            material = MaterialRepository.get_material_by_id(bom_entry.material_id)
+            if material:
+                print(f"   - {bom_entry.quantity_needed} {material.unit} of {material.name}")
+    
+    # Get products that use specific materials
+    wood = MaterialRepository.get_material_by_name("Wood")
+    if wood:
+        print(f"\n3. Products that use '{wood.name}':")
+        wood_bom = BOMRepository.get_bom_by_material_id(wood.id)
+        for bom_entry in wood_bom:
+            product = ProductRepository.get_product_by_id(bom_entry.product_id)
+            if product:
+                print(f"   - {product.name} needs {bom_entry.quantity_needed} {wood.unit}")
+    
+    steel = MaterialRepository.get_material_by_name("Steel")
+    if steel:
+        print(f"\n4. Products that use '{steel.name}':")
+        steel_bom = BOMRepository.get_bom_by_material_id(steel.id)
+        for bom_entry in steel_bom:
+            product = ProductRepository.get_product_by_id(bom_entry.product_id)
+            if product:
+                print(f"   - {product.name} needs {bom_entry.quantity_needed} {steel.unit}")
+    
+    # Production calculation example
+    print("\n" + "="*50)
+    print("PRODUCTION CALCULATION SHOWCASE")
+    print("="*50)
+    
+    print("\nExample: How much material is needed to produce 5 tables and 10 chairs?")
+    
+    # Calculate for 5 tables
+    if table:
+        table_bom = BOMRepository.get_bom_by_product_id(table.id)
+        print(f"\nFor 5 {table.name}s:")
+        for bom_entry in table_bom:
+            material = MaterialRepository.get_material_by_id(bom_entry.material_id)
+            if material:
+                total_needed = bom_entry.quantity_needed * 5
+                print(f"   - {total_needed} {material.unit} of {material.name}")
+    
+    # Calculate for 10 chairs
+    if chair:
+        chair_bom = BOMRepository.get_bom_by_product_id(chair.id)
+        print(f"\nFor 10 {chair.name}s:")
+        for bom_entry in chair_bom:
+            material = MaterialRepository.get_material_by_id(bom_entry.material_id)
+            if material:
+                total_needed = bom_entry.quantity_needed * 10
+                print(f"   - {total_needed} {material.unit} of {material.name}")
+    
+    # Total material requirements
+    print(f"\nTotal material requirements:")
+    material_totals = {}
+    
+    if table:
+        table_bom = BOMRepository.get_bom_by_product_id(table.id)
+        for bom_entry in table_bom:
+            material = MaterialRepository.get_material_by_id(bom_entry.material_id)
+            if material:
+                if material.name not in material_totals:
+                    material_totals[material.name] = {"quantity": 0, "unit": material.unit}
+                material_totals[material.name]["quantity"] += bom_entry.quantity_needed * 5
+    
+    if chair:
+        chair_bom = BOMRepository.get_bom_by_product_id(chair.id)
+        for bom_entry in chair_bom:
+            material = MaterialRepository.get_material_by_id(bom_entry.material_id)
+            if material:
+                if material.name not in material_totals:
+                    material_totals[material.name] = {"quantity": 0, "unit": material.unit}
+                material_totals[material.name]["quantity"] += bom_entry.quantity_needed * 10
+    
+    for material_name, data in material_totals.items():
+        print(f"   - {data['quantity']} {data['unit']} of {material_name}")
+    
+    print("="*50)
+
+
 def showcase():
     
     # Initialize database (creates file and directory)
@@ -178,6 +330,9 @@ def showcase():
     
     # Showcase Products functionality  
     showcase_products()
+    
+    # Showcase BOM functionality
+    showcase_bom()
     
     # Don't close database here - let Qt app use the same connection
     print("\nDatabase showcase completed. Starting Qt application...")
