@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BOMAddEdit</class>
+ <widget class="QDialog" name="BOMAddEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>476</width>
+    <height>212</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+                background-color: #f6f7fb;
+                border-radius: 10px;
+}
+
+QLabel {
+	font-weight: bold;
+	color: #2b3a55;
+}
+
+QLineEdit, QComboBox, QTextEdit, QSpinBox {
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 4px;
+	 background-color: #ffffff;
+}
+ 
+QDialogButtonBox QPushButton {
+	background-color: #2b3a55;
+	color: white;
+	border-radius: 6px;
+	padding: 6px 12px;
+}
+
+QDialogButtonBox QPushButton:hover {
+background-color: #3b4f70;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="lblProduct">
+       <property name="text">
+        <string>Product</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="cbProduct"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lblMaterial">
+       <property name="text">
+        <string>Material</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="cbMaterial"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lblQuantity">
+       <property name="text">
+        <string>Quantity needed</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDoubleSpinBox" name="sbQuantity"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="BOMButtonBox">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Save</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>BOMButtonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>BOMAddEdit</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BOMButtonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>BOMAddEdit</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -30,7 +30,7 @@
      </property>
      <property name="styleSheet">
       <string notr="true">font-weight: bold;
-    font-size: 13pt;</string>
+font-size: 18px;</string>
      </property>
      <property name="text">
       <string>Are you sure you want to delete material: 'XYZ'</string>
@@ -43,7 +43,33 @@
    <item>
     <widget class="QDialogButtonBox" name="btn_confirm_dialog">
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">QDialog {
+                background-color: #f6f7fb;
+                border-radius: 10px;
+}
+
+QLabel {
+	font-weight: bold;
+	color: #2b3a55;
+}
+
+QLineEdit, QComboBox, QTextEdit, QSpinBox {
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 4px;
+	 background-color: #ffffff;
+}
+ 
+QDialogButtonBox QPushButton {
+	background-color: #2b3a55;
+	color: white;
+	border-radius: 6px;
+	padding: 6px 12px;
+}
+
+QDialogButtonBox QPushButton:hover {
+background-color: #3b4f70;
+}</string>
      </property>
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>

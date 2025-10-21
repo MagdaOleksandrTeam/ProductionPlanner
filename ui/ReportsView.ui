@@ -16,8 +16,18 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">font-size: 18px;
+font-weight: bold;
+color: #1E3A5F;
+background-color: #F4F5F7;
+border-radius: 8px;</string>
+     </property>
      <property name="text">
       <string>Reports and Export</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>

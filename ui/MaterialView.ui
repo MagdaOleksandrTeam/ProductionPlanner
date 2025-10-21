@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>677</width>
-    <height>538</height>
+    <height>434</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,10 +30,10 @@
      </property>
      <property name="styleSheet">
       <string notr="true">font-size: 18px;
-                                                                font-weight: bold;
-                                                                color: #1E3A5F;
-                                                                background-color: #F4F5F7;
-                                                                border-radius: 8px;</string>
+font-weight: bold;
+color: #1E3A5F;
+background-color: #F4F5F7;
+border-radius: 8px;</string>
      </property>
      <property name="text">
       <string>Materials</string>
@@ -47,21 +47,21 @@
     <widget class="QTableWidget" name="tableMaterial">
      <property name="styleSheet">
       <string notr="true">QTableWidget {
-                                                                background-color: #ffffff;
-                                                                alternate-background-color: #f2f5fa;
-                                                                gridline-color: #d0d4da;
-                                                                font-size: 13px;
-                                                                border: 1px solid #ccc;
-                                                                }
+	background-color: #ffffff;
+	alternate-background-color: #f2f5fa;
+	gridline-color: #d0d4da;
+	font-size: 13px;
+	border: 1px solid #ccc;
+}
 
-                                                                QHeaderView::section {
-                                                                background-color: #e6e9ef;
-                                                                font-weight: bold;
-                                                                font-size: 14px;
-                                                                color: #333333;
-                                                                padding: 4px;
-                                                                border: 1px solid #d0d4da;
-                                                                }</string>
+QHeaderView::section {
+	background-color: #e6e9ef;
+	font-weight: bold;
+	font-size: 14px;
+	color: #333333;
+	padding: 4px;
+	border: 1px solid #d0d4da;
+}</string>
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
