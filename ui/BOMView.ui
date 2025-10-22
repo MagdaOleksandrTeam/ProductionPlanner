@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>bomWidget</class>
- <widget class="QWidget" name="bomWidget">
+ <class>pageBOM</class>
+ <widget class="QWidget" name="pageBOM">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -29,11 +29,7 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">font-size: 18px;
-font-weight: bold;
-color: #1E3A5F;
-background-color: #F4F5F7;
-border-radius: 8px;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Bill Of Materials</string>
@@ -44,7 +40,7 @@ border-radius: 8px;</string>
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget_2" native="true">
+    <widget class="QWidget" name="filter" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -73,26 +69,7 @@ color: #333333;</string>
       <item>
        <widget class="QPushButton" name="btn_show">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-	background-color: #3A5F8F;
-	color: #FFFFFF;
-	font-size: 13px;
-	font-weight: bold;
-	border-radius: 4px;
-	padding: 6px 10px;
-}
-
-QPushButton:hover {
-	background-color: #2E4B70;
-}
-
-QPushButton:pressed {
-	background-color: #1F344D;
-}
-
-QPushButton:pressed {
-	background-color: #2a5d8f;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Show</string>
@@ -108,22 +85,7 @@ QPushButton:pressed {
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">QTableWidget {
-	background-color: #ffffff;
-	alternate-background-color: #f2f5fa;
-	gridline-color: #d0d4da;
-	font-size: 13px;
-	border: 1px solid #ccc;
-}
-
-QHeaderView::section {
-	background-color: #e6e9ef;
-	font-weight: bold;
-	font-size: 14px;
-	color: #333333;
-	padding: 4px;
-	border: 1px solid #d0d4da;
-}</string>
+      <string notr="true"/>
      </property>
      <property name="sizeAdjustPolicy">
       <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
@@ -172,7 +134,7 @@ QHeaderView::section {
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="buttons" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -186,26 +148,7 @@ QHeaderView::section {
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QPushButton {
-	background-color: #3A5F8F;
-	color: #FFFFFF;
-	font-size: 13px;
-	font-weight: bold;
-	border-radius: 4px;
-	padding: 6px 10px;
-}
-
-QPushButton:hover {
-	background-color: #2E4B70;
-}
-
-QPushButton:pressed {
-	background-color: #1F344D;
-}
-
-QPushButton:pressed {
-	background-color: #2a5d8f;
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>

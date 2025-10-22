@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from PyQt6.QtWidgets import QApplication
 from main_window import MainWindow
 from models.database import init_db, close_db, get_connection
@@ -341,7 +341,17 @@ def showcase():
 if __name__ == "__main__":
     showcase()
 
+
     app = QApplication(sys.argv)
+
+    qss_path = os.path.join(os.path.dirname(__file__), "styles", "app.qss")
+    if os.path.exists(qss_path):
+        with open(qss_path, "r") as f:
+            app.setStyleSheet(f.read())
+            print("QSS loaded from:", qss_path)
+    else:
+        print("QSS file not found:", qss_path)
+
     window = MainWindow()
     window.show()
     

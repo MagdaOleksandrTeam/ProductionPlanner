@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>pageSchedule</class>
+ <widget class="QWidget" name="pageSchedule">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,13 +15,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="lblTitle">
      <property name="styleSheet">
-      <string notr="true">font-size: 18px;
-font-weight: bold;
-color: #1E3A5F;
-background-color: #F4F5F7;
-border-radius: 8px;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Schedule</string>

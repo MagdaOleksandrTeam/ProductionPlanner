@@ -1,17 +1,21 @@
 from PyQt6 import uic
 from PyQt6.QtCore import QTimer
-from PyQt6.QtWidgets import QMainWindow, QButtonGroup
-from views import DashboardView, MaterialView, BOMView, OrdersView, MRPView, ScheduleView, ReportsView
+from PyQt6.QtWidgets import QMainWindow, QButtonGroup, QPushButton
+from views import DashboardView, MaterialView, ProductView, BOMView, MachineView, OrdersView, MRPView, ScheduleView, ReportsView
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("ui/MainWindow.ui", self)
+        with open("styles/app.qss", "r") as f:
+            self.setStyleSheet(f.read())
 
         self.dashboard_page = DashboardView()
         self.material_page = MaterialView()
+        self.product_page = ProductView()
         self.bom_page = BOMView()
+        self.machine_page = MachineView()
         self.orders_page = OrdersView()
         self.mrp_page = MRPView()
         self.schedule_page = ScheduleView()
@@ -21,7 +25,9 @@ class MainWindow(QMainWindow):
         self.pages = {
             self.btn_dashboard: self.dashboard_page,
             self.btn_material: self.material_page,
+            self.btn_product: self.product_page,
             self.btn_bom: self.bom_page,
+            self.btn_machine: self.machine_page,
             self.btn_orders: self.orders_page,
             self.btn_mrp: self.mrp_page,
             self.btn_schedule: self.schedule_page,
@@ -46,9 +52,21 @@ class MainWindow(QMainWindow):
         self.stackedWidget.setCurrentWidget(self.dashboard_page)
         self.btn_dashboard.setChecked(True)
         self.dashboard_page.load_view()
-
-        # Initial app start message
+                # Initial app start message
         self.show_status("Production Planner started!", "info")
+        
+        for page in self.pages.values():
+            for btn in page.findChildren(QPushButton):
+            # jeśli nie jest sidebar
+                if not getattr(btn, "isSidebar", False):
+                    btn.setStyleSheet("""
+                        background-color: #3A5F8F;
+                        color: white;
+                        font-weight: bold;
+                        border-radius: 4px;
+                        padding: 6px 10px;
+                    """)
+
 
     def switch_page(self, page):
         self.stackedWidget.setCurrentWidget(page)

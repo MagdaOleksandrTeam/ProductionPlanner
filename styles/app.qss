@@ -1,0 +1,78 @@
+/* SIDEBAR */
+QWidget#sidebarWidget {
+    background-color: #1E3A5F;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+QWidget#sidebarWidget QPushButton {
+    color: white;
+    margin-top: 12px;
+    background-color: transparent;
+    border: 1px solid #AAAAAA;
+    border-radius: 5px;
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+QWidget#sidebarWidget QPushButton:hover {
+    background-color: #3A6EA5;
+    border-color: #888888;
+}
+
+QWidget#sidebarWidget QPushButton:pressed,
+QWidget#sidebarWidget QPushButton:checked {
+    background-color: #2E5C9A;
+    border-color: #666666;
+}
+
+
+/* TABLE */
+QTableWidget {
+	background-color: #ffffff;
+	alternate-background-color: #f2f5fa;
+	gridline-color: #d0d4da;
+	font-size: 13px;
+	border: 1px solid #ccc;
+}
+
+QHeaderView::section {
+	background-color: #e6e9ef;
+	font-weight: bold;
+	font-size: 14px;
+	color: #333333;
+	padding: 4px;
+	border: 1px solid #d0d4da;
+}
+
+
+/* LABEL */
+QLabel#lblTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1E3A5F;
+    background-color: #F4F5F7;
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+/* DIALOGS */
+QDialog {
+    background-color: #F4F5F7;
+    border-radius: 8px;
+}
+
+QDialogButtonBox QPushButton {
+    background-color: #333333;
+    color: white;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+QDialogButtonBox QPushButton:hover {
+    background-color: #444444;
+}
+
