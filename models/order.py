@@ -23,9 +23,13 @@ class ProductionOrder():
     status: str
     priority: int
     created_at: str = ""  # Date string in format 'YYYY-MM-DD'
+    assigned_machine_id: int = None  # FK to machines, nullable
+    started_at: str = ""  # DateTime string, nullable - when production actually started
     
     def __str__(self) -> str:
-        return f"ProductionOrder(ID: {self.id}, Product ID: {self.product_id}, Quantity: {self.quantity}, Deadline: {self.deadline}, Status: {self.status}, Priority: {self.priority}, Created: {self.created_at})"
+        machine_info = f", Machine: {self.assigned_machine_id}" if self.assigned_machine_id else ""
+        started_info = f", Started: {self.started_at}" if self.started_at else ""
+        return f"ProductionOrder(ID: {self.id}, Product ID: {self.product_id}, Quantity: {self.quantity}, Deadline: {self.deadline}, Status: {self.status}, Priority: {self.priority}, Created: {self.created_at}{machine_info}{started_info})"
 
 
 class ProductionOrderRepository:
@@ -43,7 +47,10 @@ class ProductionOrderRepository:
                     status TEXT NOT NULL CHECK(status IN ('in_queue', 'in_progress', 'completed')),
                     priority INTEGER NOT NULL CHECK(priority BETWEEN 1 AND 3),
                     created_at DATE DEFAULT (date('now')),
-                    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+                    assigned_machine_id INTEGER,
+                    started_at DATETIME,
+                    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+                    FOREIGN KEY (assigned_machine_id) REFERENCES machines(id) ON DELETE SET NULL
                 );
             """)
             conn.commit()
@@ -54,9 +61,10 @@ class ProductionOrderRepository:
         with database.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                INSERT INTO production_orders (product_id, quantity, deadline, status, priority) 
-                VALUES (?, ?, ?, ?, ?)
-            """, (order.product_id, order.quantity, order.deadline, order.status, order.priority))
+                INSERT INTO production_orders (product_id, quantity, deadline, status, priority, assigned_machine_id, started_at) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (order.product_id, order.quantity, order.deadline, order.status, order.priority, 
+                  order.assigned_machine_id, order.started_at if order.started_at else None))
             conn.commit()
             order.id = cursor.lastrowid
             # Get the created_at value that was set by the database
@@ -70,14 +78,15 @@ class ProductionOrderRepository:
         with database.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT id, product_id, quantity, deadline, status, priority, created_at 
+                SELECT id, product_id, quantity, deadline, status, priority, created_at, assigned_machine_id, started_at 
                 FROM production_orders WHERE id = ?
             """, (order_id,))
             row = cursor.fetchone()
             if row:
                 return ProductionOrder(
                     id=row[0], product_id=row[1], quantity=row[2], 
-                    deadline=row[3], status=row[4], priority=row[5], created_at=row[6]
+                    deadline=row[3], status=row[4], priority=row[5], created_at=row[6],
+                    assigned_machine_id=row[7], started_at=row[8] if row[8] else ""
                 )
             return None
     
@@ -87,14 +96,15 @@ class ProductionOrderRepository:
         with database.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT id, product_id, quantity, deadline, status, priority, created_at 
+                SELECT id, product_id, quantity, deadline, status, priority, created_at, assigned_machine_id, started_at 
                 FROM production_orders WHERE product_id = ?
                 ORDER BY deadline, priority
             """, (product_id,))
             rows = cursor.fetchall()
             return [ProductionOrder(
                 id=row[0], product_id=row[1], quantity=row[2], 
-                deadline=row[3], status=row[4], priority=row[5], created_at=row[6]
+                deadline=row[3], status=row[4], priority=row[5], created_at=row[6],
+                assigned_machine_id=row[7], started_at=row[8] if row[8] else ""
             ) for row in rows]
     
     @staticmethod
@@ -103,14 +113,15 @@ class ProductionOrderRepository:
         with database.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT id, product_id, quantity, deadline, status, priority, created_at 
+                SELECT id, product_id, quantity, deadline, status, priority, created_at, assigned_machine_id, started_at 
                 FROM production_orders WHERE status = ?
                 ORDER BY deadline, priority
             """, (status,))
             rows = cursor.fetchall()
             return [ProductionOrder(
                 id=row[0], product_id=row[1], quantity=row[2], 
-                deadline=row[3], status=row[4], priority=row[5], created_at=row[6]
+                deadline=row[3], status=row[4], priority=row[5], created_at=row[6],
+                assigned_machine_id=row[7], started_at=row[8] if row[8] else ""
             ) for row in rows]
     
     @staticmethod
@@ -119,14 +130,15 @@ class ProductionOrderRepository:
         with database.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT id, product_id, quantity, deadline, status, priority, created_at 
+                SELECT id, product_id, quantity, deadline, status, priority, created_at, assigned_machine_id, started_at 
                 FROM production_orders WHERE priority = ?
                 ORDER BY deadline
             """, (priority,))
             rows = cursor.fetchall()
             return [ProductionOrder(
                 id=row[0], product_id=row[1], quantity=row[2], 
-                deadline=row[3], status=row[4], priority=row[5], created_at=row[6]
+                deadline=row[3], status=row[4], priority=row[5], created_at=row[6],
+                assigned_machine_id=row[7], started_at=row[8] if row[8] else ""
             ) for row in rows]
         
     @staticmethod
@@ -136,9 +148,11 @@ class ProductionOrderRepository:
             cursor = conn.cursor()
             cursor.execute("""
                 UPDATE production_orders 
-                SET product_id = ?, quantity = ?, deadline = ?, status = ?, priority = ?
+                SET product_id = ?, quantity = ?, deadline = ?, status = ?, priority = ?, 
+                    assigned_machine_id = ?, started_at = ?
                 WHERE id = ?
-            """, (order.product_id, order.quantity, order.deadline, order.status, order.priority, order.id))
+            """, (order.product_id, order.quantity, order.deadline, order.status, order.priority, 
+                  order.assigned_machine_id, order.started_at if order.started_at else None, order.id))
             conn.commit()
 
     @staticmethod
@@ -155,14 +169,15 @@ class ProductionOrderRepository:
         with database.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT id, product_id, quantity, deadline, status, priority, created_at 
+                SELECT id, product_id, quantity, deadline, status, priority, created_at, assigned_machine_id, started_at 
                 FROM production_orders 
                 ORDER BY deadline, priority
             """)
             rows = cursor.fetchall()
             return [ProductionOrder(
                 id=row[0], product_id=row[1], quantity=row[2], 
-                deadline=row[3], status=row[4], priority=row[5], created_at=row[6]
+                deadline=row[3], status=row[4], priority=row[5], created_at=row[6],
+                assigned_machine_id=row[7], started_at=row[8] if row[8] else ""
             ) for row in rows]
     
     @staticmethod
@@ -171,7 +186,7 @@ class ProductionOrderRepository:
         with database.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT id, product_id, quantity, deadline, status, priority, created_at 
+                SELECT id, product_id, quantity, deadline, status, priority, created_at, assigned_machine_id, started_at 
                 FROM production_orders 
                 WHERE status != 'completed'
                 ORDER BY deadline, priority
@@ -179,7 +194,26 @@ class ProductionOrderRepository:
             rows = cursor.fetchall()
             return [ProductionOrder(
                 id=row[0], product_id=row[1], quantity=row[2], 
-                deadline=row[3], status=row[4], priority=row[5], created_at=row[6]
+                deadline=row[3], status=row[4], priority=row[5], created_at=row[6],
+                assigned_machine_id=row[7], started_at=row[8] if row[8] else ""
+            ) for row in rows]
+    
+    @staticmethod
+    def get_orders_by_machine_id(machine_id: int) -> List[ProductionOrder]:
+        """Fetches all production orders assigned to a specific machine."""
+        with database.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT id, product_id, quantity, deadline, status, priority, created_at, assigned_machine_id, started_at 
+                FROM production_orders 
+                WHERE assigned_machine_id = ?
+                ORDER BY started_at DESC
+            """, (machine_id,))
+            rows = cursor.fetchall()
+            return [ProductionOrder(
+                id=row[0], product_id=row[1], quantity=row[2], 
+                deadline=row[3], status=row[4], priority=row[5], created_at=row[6],
+                assigned_machine_id=row[7], started_at=row[8] if row[8] else ""
             ) for row in rows]
     
     @staticmethod
