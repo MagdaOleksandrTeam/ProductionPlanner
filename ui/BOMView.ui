@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0,0">
    <item>
     <widget class="QLabel" name="lblTitle">
      <property name="sizePolicy">
@@ -49,7 +49,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="lblSelect">
         <property name="styleSheet">
          <string notr="true">font-weight: bold;
 font-size: 14px;
@@ -113,28 +113,28 @@ color: #333333;</string>
      </attribute>
      <column>
       <property name="text">
-       <string>Product</string>
+       <string>Id</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Material</string>
+       <string>Product id</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Quantity needed</string>
+       <string>Material id</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Unit</string>
+       <string>Quantity</string>
       </property>
      </column>
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="buttons" native="true">
+    <widget class="QWidget" name="BOMButtonBox" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -152,27 +152,34 @@ color: #333333;</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QPushButton" name="btnAddBOM">
+       <widget class="QPushButton" name="btn_addBOM">
         <property name="text">
          <string>Add</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnEditBOM">
+       <widget class="QPushButton" name="btn_editBOM">
         <property name="text">
          <string>Edit</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnDeleteBOM">
+       <widget class="QPushButton" name="btn_deleteBOM">
         <property name="text">
          <string>Delete</string>
         </property>
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_calculate_requirements">
+     <property name="text">
+      <string>Calculate Requirements</string>
+     </property>
     </widget>
    </item>
   </layout>

@@ -17,7 +17,7 @@ class MaterialView(QWidget):
         self.load_materials()
         
     def load_view(self):
-        self.statusMessage.emit("Create / Edit Material loaded!", "info")
+        self.statusMessage.emit("Material view loaded!", "info")
         
     def load_materials(self):
         self.tableMaterial.setRowCount(0)
@@ -34,7 +34,7 @@ class MaterialView(QWidget):
             
     def add_material(self):
         dialog = MaterialDialog()
-        if dialog.exec():  # clicked OK
+        if dialog.exec():  # clicked save
             new_material = dialog.get_material()
             MaterialRepository.add_material(new_material)
             self.load_materials() #reload

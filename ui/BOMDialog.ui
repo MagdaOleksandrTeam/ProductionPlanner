@@ -22,7 +22,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="lblProduct">
        <property name="text">
-        <string>Product</string>
+        <string>Product:</string>
        </property>
       </widget>
      </item>
@@ -32,7 +32,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="lblMaterial">
        <property name="text">
-        <string>Material</string>
+        <string>Material:</string>
        </property>
       </widget>
      </item>
@@ -42,7 +42,7 @@
      <item row="2" column="0">
       <widget class="QLabel" name="lblQuantity">
        <property name="text">
-        <string>Quantity needed</string>
+        <string>Quantity needed:</string>
        </property>
       </widget>
      </item>
