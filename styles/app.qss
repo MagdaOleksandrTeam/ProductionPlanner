@@ -1,4 +1,4 @@
-/* SIDEBAR */
+/* ====== SIDEBAR ====== */
 QWidget#sidebarWidget {
     background-color: #1E3A5F;
     border-top-right-radius: 15px;
@@ -28,7 +28,7 @@ QWidget#sidebarWidget QPushButton:checked {
 }
 
 
-/* TABLE */
+/* ====== TABLE ====== */
 QTableWidget {
 	background-color: #ffffff;
 	alternate-background-color: #f2f5fa;
@@ -47,7 +47,7 @@ QHeaderView::section {
 }
 
 
-/* LABEL */
+/* ====== LABEL ====== */
 QLabel#lblTitle {
     font-size: 18px;
     font-weight: bold;
@@ -57,7 +57,7 @@ QLabel#lblTitle {
     padding: 4px 8px;
 }
 
-/* DIALOGS */
+/* ====== DIALOGS ====== */
 QDialog {
     background-color: #F4F5F7;
     border-radius: 8px;

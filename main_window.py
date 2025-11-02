@@ -7,10 +7,13 @@ from views import DashboardView, MaterialView, ProductView, BOMView, MachineView
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        # load the UI from .ui file
         uic.loadUi("ui/MainWindow.ui", self)
+        # load stylesheet app.qss
         with open("styles/app.qss", "r") as f:
             self.setStyleSheet(f.read())
 
+        # Initialize all views
         self.dashboard_page = DashboardView()
         self.material_page = MaterialView()
         self.product_page = ProductView()
@@ -21,7 +24,7 @@ class MainWindow(QMainWindow):
         self.schedule_page = ScheduleView()
         self.reports_page = ReportsView()
 
-        # Map buttons to pages
+        # Map sidebar buttons to their pages
         self.pages = {
             self.btn_dashboard: self.dashboard_page,
             self.btn_material: self.material_page,
@@ -34,7 +37,7 @@ class MainWindow(QMainWindow):
             self.btn_reports: self.reports_page
         }
 
-        # Button group for exclusive selection
+        # Button group for exclusive selection (only one sidebar button active at a time)
         self.sidebar_group = QButtonGroup()
         self.sidebar_group.setExclusive(True)
         for btn in self.pages.keys():
@@ -43,21 +46,26 @@ class MainWindow(QMainWindow):
         # Add pages to stackedWidget
         for page in self.pages.values():
             self.stackedWidget.addWidget(page)
+            # Connect each page's statusMessage signal to main status bar
             page.statusMessage.connect(self.show_status)
 
+
+        # Connect each sidebar button to the switch_page method
         for btn, page in self.pages.items():
             btn.clicked.connect(lambda checked, p=page: self.switch_page(p))
 
-        # default page
+        # Set default page
         self.stackedWidget.setCurrentWidget(self.dashboard_page)
         self.btn_dashboard.setChecked(True)
         self.dashboard_page.load_view()
-                # Initial app start message
+        # Initial app start message
         self.show_status("Production Planner started!", "info")
         
+        
+        # style non-sidebar buttons in all pages
         for page in self.pages.values():
             for btn in page.findChildren(QPushButton):
-            # jeśli nie jest sidebar
+                # skip buttons from sidebar
                 if not getattr(btn, "isSidebar", False):
                     btn.setStyleSheet("""
                         background-color: #3A5F8F;
@@ -68,14 +76,17 @@ class MainWindow(QMainWindow):
                     """)
 
 
+    # Switches the stackedWidget to the selected page and emits the load_view msg.
     def switch_page(self, page):
         self.stackedWidget.setCurrentWidget(page)
         page.load_view()  # emit status when user switches
 
+
+    # Shows a message on the status bar with a specific style based on status (info, success, warning, error)
     def show_status(self, message: str, status: str = "info", timeout: int = 5000):
         self.statusbar.setProperty("status", status)
         self.statusbar.showMessage(message, timeout)
 
-        # Full style reload to update colors
+        # Force style refresh to update colors dynamically
         QTimer.singleShot(0, lambda: self.statusbar.style().unpolish(self.statusbar))
         QTimer.singleShot(0, lambda: self.statusbar.style().polish(self.statusbar))

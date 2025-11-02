@@ -3,6 +3,7 @@ from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QWidget
 
 class DashboardView(QWidget):
+    # Signal to send status msg (info, success, warning, error)
     statusMessage = pyqtSignal(str, str)
     def __init__(self):
         super().__init__()

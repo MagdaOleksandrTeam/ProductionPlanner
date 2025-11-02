@@ -255,9 +255,10 @@ padding: 8px 12px;</string>
                     padding: 8px 10px;
                     }
 
-                    QStatusBar[status='success'] { color: #7DFF7A; }
-                    QStatusBar[status='error'] { color: #FF7B7B; }
-                    QStatusBar[status='info'] { color: #6ECBFF; }</string>
+QStatusBar[status='success'] { color: #7DFF7A; }
+QStatusBar[status='error'] { color: #FF7B7B; }
+QStatusBar[status='info'] { color: #6ECBFF; }
+QStatusBar[status=&quot;warning&quot;]{color: #FFB300;}</string>
    </property>
   </widget>
  </widget>

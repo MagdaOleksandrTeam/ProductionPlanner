@@ -34,6 +34,41 @@
     </widget>
    </item>
    <item>
+    <widget class="QFrame" name="frame_search">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>60</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="lbl_info">
+        <property name="text">
+         <string>Search for product:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="le_product"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_product_search">
+        <property name="text">
+         <string>Search</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QTableWidget" name="tableProduct">
      <property name="styleSheet">
       <string notr="true"/>

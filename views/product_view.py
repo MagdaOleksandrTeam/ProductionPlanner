@@ -5,11 +5,15 @@ from models.product import ProductRepository
 from dialogs import ProductDialog, ConfirmDialog
 
 class ProductView(QWidget):
+    # Signal to send status msg (info, success, warning, error)
     statusMessage = pyqtSignal(str, str)
     def __init__(self):
         super().__init__()
+        # load the UI from .ui file
         uic.loadUi("ui/ProductView.ui", self)
         
+        # Connect buttons to their functions
+        self.btn_product_search.clicked.connect(self.search_items)
         self.btn_addProduct.clicked.connect(self.add_product)
         self.btn_editProduct.clicked.connect(self.edit_product)
         self.btn_deleteProduct.clicked.connect(self.delete_product)
@@ -19,11 +23,12 @@ class ProductView(QWidget):
     def load_view(self):
         self.statusMessage.emit("Product view loaded!", "info")
         
+    # Loads all products from db to the table
     def load_products(self):
         self.tableProduct.setRowCount(0)
-        
         products = ProductRepository.get_all_products()
         
+        # Insert each products to the table
         for product in products:
             row_position = self.tableProduct.rowCount()
             self.tableProduct.insertRow(row_position)
@@ -33,6 +38,42 @@ class ProductView(QWidget):
             self.tableProduct.setItem(row_position, 3, QTableWidgetItem(product.unit))
             self.tableProduct.setItem(row_position, 4, QTableWidgetItem(product.description))
             
+            
+    # Filters products based on the search query, if there is no results - emits warning
+    def search_items(self):
+        query = self.le_product.text().strip().lower()
+        table = self.tableProduct
+        total_rows = table.rowCount()
+        found_rows = []
+
+        if total_rows == 0:
+            self.statusMessage.emit("No data to search.", "warning")
+            return
+
+        if not query:
+            # If search field is empty, show all rows
+            for row in range(total_rows):
+                table.setRowHidden(row, False)
+            self.statusMessage.emit("Filter cleared – showing all products.", "info")
+            return
+
+        # Search through all rows
+        for row in range(total_rows):
+            item = table.item(row, 1)  # by product name
+            if item and query in item.text().lower():
+                table.setRowHidden(row, False)
+                found_rows.append(item.text())
+            else:
+                table.setRowHidden(row, True)
+
+        if found_rows:
+            msg = f"Found {len(found_rows)} product{'s' if len(found_rows) > 1 else ''} matching: '{query}'"
+            self.statusMessage.emit(msg, "success")
+        else:
+            self.statusMessage.emit(f"No products found matching: '{query}'.", "warning")
+    
+    
+    # Adds new product to db via ProductDialog
     def add_product(self):
         dialog = ProductDialog()
         if dialog.exec():  #clicked save
@@ -41,6 +82,8 @@ class ProductView(QWidget):
             self.load_products() #reload
             self.statusMessage.emit("Product added successffuly!", "success")
             
+            
+    # Edits selected product, if no product selected - emit error msg
     def edit_product(self):
         selected_rows = self.tableProduct.selectionModel().selectedRows()
         if not selected_rows:
@@ -60,6 +103,8 @@ class ProductView(QWidget):
             self.load_products()
             self.statusMessage.emit("Product updated successfully!", "success")
         
+        
+    # Deletes product from db, if no product selected - emit error msg
     def delete_product(self):
         selected_rows = self.tableProduct.selectionModel().selectedRows()
         if not selected_rows:
