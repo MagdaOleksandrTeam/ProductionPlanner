@@ -57,6 +57,12 @@ QLabel#lblTitle {
     padding: 4px 8px;
 }
 
+QLabel#lbl_info, QLabel#lblMachineName, QLabel#lbl_name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #1E3A5F;
+}
+
 /* ====== DIALOGS ====== */
 QDialog {
     background-color: #F4F5F7;
@@ -75,4 +81,3 @@ QDialogButtonBox QPushButton {
 QDialogButtonBox QPushButton:hover {
     background-color: #444444;
 }
-

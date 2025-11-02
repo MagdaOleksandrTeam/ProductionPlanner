@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>682</width>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,28 +25,94 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableWidget" name="tableWidget"/>
+    <widget class="QTableWidget" name="tableMachines">
+     <property name="minimumSize">
+      <size>
+       <width>664</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+     </property>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>160</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Machine id</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Machine name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Recipe Count</string>
+      </property>
+     </column>
+    </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>💡 Double-click a machine to see its recipes.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame_buttons">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>50</height>
+       <height>60</height>
       </size>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="btn_addMachine">
         <property name="text">
-         <string>1</string>
+         <string>Add Machine</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="btn_editMachine">
         <property name="text">
-         <string>2</string>
+         <string>Edit Machine</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_deleteMachine">
+        <property name="text">
+         <string>Delete Machine</string>
         </property>
        </widget>
       </item>
