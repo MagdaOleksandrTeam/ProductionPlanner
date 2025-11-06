@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OrderDetailsDialog</class>
+ <widget class="QDialog" name="OrderDetailsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>510</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Order Details</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0">
+   <item>
+    <widget class="QLabel" name="lbl_name">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="inputMethodHints">
+      <set>Qt::InputMethodHint::ImhUppercaseOnly</set>
+     </property>
+     <property name="text">
+      <string>Order Details</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <property name="horizontalSpacing">
+      <number>6</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>10</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="lbl_order_id">
+       <property name="text">
+        <string>Order Id:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="val_order_id">
+       <property name="text">
+        <string>-</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>lbl_value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lbl_product">
+       <property name="text">
+        <string>Product:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="val_product">
+       <property name="text">
+        <string>-</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>lbl_value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lbl_quantity">
+       <property name="text">
+        <string>Quantity:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="val_quantity">
+       <property name="text">
+        <string>-</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>lbl_value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="lbl_deadline">
+       <property name="text">
+        <string>Deadline:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="val_deadline">
+       <property name="text">
+        <string>-</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>lbl_value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="lbl_priority">
+       <property name="text">
+        <string>Priority:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLabel" name="val_priority">
+       <property name="text">
+        <string>-</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>lbl_value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="lbl_status">
+       <property name="text">
+        <string>Status:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLabel" name="val_status">
+       <property name="text">
+        <string>-</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>lbl_value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="lbl_assigned_machine">
+       <property name="text">
+        <string>Assigned machine:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLabel" name="val_assigned_machine">
+       <property name="text">
+        <string>-</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>lbl_value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="lbl_created_at">
+       <property name="text">
+        <string>Created date</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QLabel" name="val_created_date">
+       <property name="text">
+        <string>-</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>lbl_value</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_materials" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="lbl_info">
+        <property name="text">
+         <string>Materials required:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tableMaterials">
+        <property name="editTriggers">
+         <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+        </property>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>150</number>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Material</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Quantity needed</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Unit</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Close</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>OrderDetailsDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

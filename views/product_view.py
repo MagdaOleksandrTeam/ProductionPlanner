@@ -83,11 +83,11 @@ class ProductView(QWidget):
             self.statusMessage.emit("Product added successffuly!", "success")
             
             
-    # Edits selected product, if no product selected - emit error msg
+    # Edits selected product, if no product selected - emit msg
     def edit_product(self):
         selected_rows = self.tableProduct.selectionModel().selectedRows()
         if not selected_rows:
-            self.statusMessage.emit("Please select a product to edit!", "error")
+            self.statusMessage.emit("Please select a product to edit!", "warning")
             return
         
         row = selected_rows[0].row()
@@ -104,11 +104,11 @@ class ProductView(QWidget):
             self.statusMessage.emit("Product updated successfully!", "success")
         
         
-    # Deletes product from db, if no product selected - emit error msg
+    # Deletes product from db, if no product selected - emit msg
     def delete_product(self):
         selected_rows = self.tableProduct.selectionModel().selectedRows()
         if not selected_rows:
-            self.statusMessage.emit("Please select a product to delete!", "error")
+            self.statusMessage.emit("Please select a product to delete!", "warning")
             return
         
         row = selected_rows[0].row()

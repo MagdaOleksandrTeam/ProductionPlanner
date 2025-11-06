@@ -39,7 +39,7 @@ class MaterialView(QWidget):
             self.tableMaterial.setItem(row_position, 3, QTableWidgetItem(str(material.quantity)))
             
             
-    # Filters materials based on the search query, if there is no results - emits warning
+    # Filters materials based on the search query, if there is no results - emits error
     def search_items(self):
         query = self.le_material.text().strip().lower()
         table = self.tableMaterial
@@ -47,7 +47,7 @@ class MaterialView(QWidget):
         found_rows = []
 
         if total_rows == 0:
-            self.statusMessage.emit("No data to search.", "warning")
+            self.statusMessage.emit("No data to search.", "error")
             return
 
         if not query:
@@ -70,7 +70,7 @@ class MaterialView(QWidget):
             msg = f"Found {len(found_rows)} material{'s' if len(found_rows) > 1 else ''} matching: '{query}'"
             self.statusMessage.emit(msg, "success")
         else:
-            self.statusMessage.emit(f"No materials found matching query: '{query}'.", "warning")
+            self.statusMessage.emit(f"No materials found matching query: '{query}'.", "error")
             
             
     # Adds new material to db via MaterialDialog
@@ -83,11 +83,11 @@ class MaterialView(QWidget):
             self.statusMessage.emit("Material added successfully!", "success")
         
         
-    # Edits selected material, if no material selected - emit error msg
+    # Edits selected material, if no material selected - emit warning msg
     def edit_material(self):
         selected_rows = self.tableMaterial.selectionModel().selectedRows()
         if not selected_rows:
-            self.statusMessage.emit("Please select a material to edit!", "error")
+            self.statusMessage.emit("Please select a material to edit!", "warning")
             return
 
         row = selected_rows[0].row()
@@ -104,11 +104,11 @@ class MaterialView(QWidget):
             self.statusMessage.emit("Material updated successfully!", "success")
         
         
-    # Deletes material from db, if no material selected - emit error msg  
+    # Deletes material from db, if no material selected - emit warning msg  
     def delete_material(self):
         selected_rows = self.tableMaterial.selectionModel().selectedRows()
         if not selected_rows:
-            self.statusMessage.emit("Please select a material to delete!", "error")
+            self.statusMessage.emit("Please select a material to delete!", "warning")
             return
 
         row = selected_rows[0].row()

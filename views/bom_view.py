@@ -88,7 +88,7 @@ class BOMView(QWidget):
     def edit_bom(self):
         selected_rows = self.tableBOM.selectionModel().selectedRows()
         if not selected_rows:
-            self.statusMessage.emit("Please select a BOM to edit!", "error")
+            self.statusMessage.emit("Please select a BOM to edit!", "warning")
             return
         
         row = selected_rows[0].row()
@@ -105,11 +105,11 @@ class BOMView(QWidget):
             self.statusMessage.emit("BOM updated successfully!", "success")
     
     
-    # Deletes the selected BOM entry after user confirmation. Shows error if no row is selected.    
+    # Deletes the selected BOM entry after user confirmation. Shows warning if no row is selected.    
     def delete_bom(self):
         selected_rows = self.tableBOM.selectionModel().selectedRows()
         if not selected_rows:
-            self.statusMessage.emit("Please select a BOM to delete!", "error")
+            self.statusMessage.emit("Please select a BOM to delete!", "warning")
             return
         
         row = selected_rows[0].row()

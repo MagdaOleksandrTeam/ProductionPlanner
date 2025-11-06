@@ -17,6 +17,7 @@ class MachineView(QWidget):
         self.btn_addMachine.clicked.connect(self.add_machine)
         self.btn_editMachine.clicked.connect(self.edit_machine)
         self.btn_deleteMachine.clicked.connect(self.delete_machine)
+        self.btn_search_machine.clicked.connect(self.search_items)
 
         # Table double-click opens recipe dialog
         self.tableMachines.itemDoubleClicked.connect(self.open_machine_recipes)
@@ -43,6 +44,40 @@ class MachineView(QWidget):
             self.tableMachines.setItem(row, 2, QTableWidgetItem(str(len(recipes))))
 
 
+    # Filters machines based on the search query, if there is no results - emits error
+    def search_items(self):
+        query = self.le_machine.text().strip().lower()
+        table = self.tableMachines
+        total_rows = table.rowCount()
+        found_rows = []
+
+        if total_rows == 0:
+            self.statusMessage.emit("No data to search.", "error")
+            return
+
+        if not query:
+            # If search field is empty, show all rows
+            for row in range(total_rows):
+                table.setRowHidden(row, False)
+            self.statusMessage.emit("Filter cleared – showing all machines.", "info")
+            return
+
+        # Search through all rows
+        for row in range(total_rows):
+            item = table.item(row, 1) #by machine name
+            if item and query in item.text().lower():
+                table.setRowHidden(row, False)
+                found_rows.append(item.text())
+            else:
+                table.setRowHidden(row, True)
+
+        if found_rows:
+            msg = f"Found {len(found_rows)} machine{'s' if len(found_rows) > 1 else ''} matching: '{query}'"
+            self.statusMessage.emit(msg, "success")
+        else:
+            self.statusMessage.emit(f"No machines found matching query: '{query}'.", "error")
+    
+    
     # CRUD operations for machines
     def add_machine(self):
         from dialogs import MachineDialog

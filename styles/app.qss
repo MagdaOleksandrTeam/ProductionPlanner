@@ -49,7 +49,7 @@ QHeaderView::section {
 
 /* ====== LABEL ====== */
 QLabel#lblTitle {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: bold;
     color: #1E3A5F;
     background-color: #F4F5F7;
@@ -57,10 +57,23 @@ QLabel#lblTitle {
     padding: 4px 8px;
 }
 
-QLabel#lbl_info, QLabel#lblMachineName, QLabel#lbl_name {
-    font-size: 16px;
+QLabel#lbl_name {
+    font-size: 14px;
     font-weight: bold;
     color: #1E3A5F;
+}
+
+QLabel#lblSearch, QLabel#lbl_info, QLabel#lblInfo {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333333;
+}
+
+QLabel#lblHint {
+    color: #555;
+    font-style: italic;
+    font-size: 10pt;
+    padding: 4px;
 }
 
 /* ====== DIALOGS ====== */
@@ -80,4 +93,16 @@ QDialogButtonBox QPushButton {
 
 QDialogButtonBox QPushButton:hover {
     background-color: #444444;
+}
+
+QLabel.form_lbl {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2c3e50;
+    padding: 3px 0;
+}
+
+Qlabel.lbl_value {
+    font-size: 14px;
+    color: #333333;
 }

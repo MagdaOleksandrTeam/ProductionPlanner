@@ -49,7 +49,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="lbl_info">
+       <widget class="QLabel" name="lblSearch">
         <property name="text">
          <string>Search for material:</string>
         </property>

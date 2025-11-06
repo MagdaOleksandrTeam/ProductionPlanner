@@ -49,14 +49,12 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QLabel" name="lblSelect">
+       <widget class="QLabel" name="lblSearch">
         <property name="styleSheet">
-         <string notr="true">font-weight: bold;
-font-size: 14px;
-color: #333333;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
-         <string>Select product</string>
+         <string>Select product:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>

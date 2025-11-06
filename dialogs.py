@@ -1,9 +1,11 @@
 from PyQt6 import uic
+from PyQt6.QtCore import QDate
 from PyQt6.QtWidgets import QDialog, QTableWidgetItem
 from models.material import Material, MaterialRepository
 from models.product import Product, ProductRepository
-from models.bom import BOM
+from models.bom import BOM, BOMRepository
 from models.machine import Machine, MachineRecipe, MachineRepository, MachineRecipeRepository
+from models.order import ProductionOrder
 
 # ----------- MaterialView Add/Edit -------------
 class MaterialDialog(QDialog):
@@ -150,9 +152,9 @@ class MachineRecipeDialog(QDialog):
         # Load machine name dynamically
         machine = MachineRepository.get_machine_by_id(machine_id)
         if machine:
-            self.lblMachineName.setText(f"Recipes for machine: {machine.name}")
+            self.lbl_name.setText(f"Recipes for machine: {machine.name}")
         else:
-            self.lblMachineName.setText("Recipes for machine: (unknown)")
+            self.lbl_name.setText("Recipes for machine: (unknown)")
 
         # Connect buttons
         self.btn_addRecipe.clicked.connect(self.add_recipe)
@@ -210,7 +212,7 @@ class MachineRecipeDialog(QDialog):
 
     # Delete recipe
     def delete_recipe(self):
-        """Delete selected recipe after confirmation."""
+        # Delete selected recipe after confirmation
         selected_rows = self.tableRecipes.selectionModel().selectedRows()
         if not selected_rows:
             return
@@ -258,6 +260,131 @@ class RecipeAddEditDialog(QDialog):
             product_id=self.cb_product.currentData(),
             production_capacity=self.sb_capacity.value()
         )
+        
+# --------------- Order Add/Edit ------------------
+class OrderDialog(QDialog):
+# Dialog for adding/editing orders
+    def __init__(self, order: ProductionOrder = None):
+        super().__init__()
+        uic.loadUi("ui/OrderDialog.ui", self)
+        
+        # Load products and machines
+        self.cb_product.clear()
+        self.cb_machine.clear()
+        self.cb_status.clear()
+        self.cb_priority.clear()
+        
+        products = ProductRepository.get_all_products()
+        machines = MachineRepository.get_all_machines()
+        
+        for p in products:
+            self.cb_product.addItem(f"{p.id}. {p.name}", p.id)
+            
+        for m in machines:
+            self.cb_machine.addItem(f"{m.id}. {m.name}", m.id)
+        
+        statuses = ["in_queue", "in_progress", "completed"]
+        priorities = ["1", "2", "3"]
+        
+        self.cb_status.addItems(statuses)
+        self.cb_priority.addItems(priorities)
+        
+        # Populate fields if editing an existing order
+        if order:
+            # product
+            index_product = self.cb_product.findData(order.product_id)
+            if index_product != -1:
+                self.cb_product.setCurrentIndex(index_product)
+
+            # machine
+            index_machine = self.cb_machine.findData(order.assigned_machine_id)
+            if index_machine != -1:
+                self.cb_machine.setCurrentIndex(index_machine)
+
+            # quantity
+            self.sb_quantity.setValue(order.quantity)
+
+            # deadline
+            if order.deadline:
+                self.de_deadline.setDate(QDate.fromString(order.deadline, "yyyy-MM-dd"))
+
+            # status and priority
+            index_status = self.cb_status.findText(order.status)
+            if index_status != -1:
+                self.cb_status.setCurrentIndex(index_status)
+
+            # priority – musi być int 1–3, więc szukamy po tekście (np. "1", "2", "3")
+            index_priority = self.cb_priority.findText(str(order.priority))
+            if index_priority != -1:
+                self.cb_priority.setCurrentIndex(index_priority)
+
+        else:
+            # --- Add new order ---
+            self.sb_quantity.setValue(1)
+            self.de_deadline.setDate(QDate.currentDate())
+            self.cb_status.setCurrentIndex(0)
+            self.cb_priority.setCurrentIndex(1)
+
+        # Connect dialog buttons to accept/reject
+        self.buttonBox.accepted.connect(self.accept)
+        self.buttonBox.rejected.connect(self.reject)
+
+    # Return Order with entered values
+    def get_order(self) -> ProductionOrder:
+        product_id = self.cb_product.currentData()
+        assigned_machine_id = self.cb_machine.currentData()
+        deadline_str = self.de_deadline.date().toString("yyyy-MM-dd")
+
+        return ProductionOrder(
+            id=0,
+            product_id=product_id,
+            quantity=self.sb_quantity.value(),
+            deadline=deadline_str,
+            assigned_machine_id=assigned_machine_id,
+            status=self.cb_status.currentText(),
+            priority=int(self.cb_priority.currentText())
+        )
+        
+        
+# ------------- Order Details Dialog ---------------
+class OrderDetailsDialog(QDialog):
+# Dialog with order details such as assigned machine and material required
+    def __init__(self, order: ProductionOrder):
+        super().__init__()
+        uic.loadUi("ui/OrderDetailsDialog.ui", self)
+
+        self.val_order_id.setText(str(order.id))
+        self.val_product.setText(ProductRepository.get_product_by_id(order.product_id).name)
+        self.val_quantity.setText(str(order.quantity))
+        self.val_deadline.setText(order.deadline)
+        self.val_priority.setText(str(order.priority))
+        self.val_status.setText(order.status)
+        self.val_assigned_machine.setText(
+            MachineRepository.get_machine_by_id(order.assigned_machine_id).name
+            if order.assigned_machine_id else "-"
+        )
+        self.val_created_date.setText(getattr(order, "created_date", "-"))
+
+        # Get bom materials
+        bom_items = BOMRepository.get_bom_by_product_id(order.product_id)
+        self.tableMaterials.setRowCount(len(bom_items))
+
+        for row, bom in enumerate(bom_items):
+            material = MaterialRepository.get_material_by_id(bom.material_id)
+            if not material:
+                continue
+
+            # ważne: obliczamy *osobno* dla każdego materiału
+            required_qty = bom.quantity_needed * order.quantity
+
+            self.tableMaterials.setItem(row, 0, QTableWidgetItem(material.name))
+            self.tableMaterials.setItem(row, 1, QTableWidgetItem(str(required_qty)))
+            self.tableMaterials.setItem(row, 2, QTableWidgetItem(material.unit))
+
+        self.tableMaterials.resizeColumnsToContents()
+
+        # button close
+        self.buttonBox.rejected.connect(self.reject)
         
         
 # --------------- Delete Dialog ------------------

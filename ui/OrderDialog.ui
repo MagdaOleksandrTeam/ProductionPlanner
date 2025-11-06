@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OrderDialog</class>
+ <widget class="QDialog" name="OrderDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Add/Edit Order</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="lbl_info">
+     <property name="inputMethodHints">
+      <set>Qt::InputMethodHint::ImhLatinOnly</set>
+     </property>
+     <property name="text">
+      <string>Order Details</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="lbl_product">
+       <property name="text">
+        <string>Product:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="cb_product"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lbl_quantity">
+       <property name="text">
+        <string>Quantity:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSpinBox" name="sb_quantity">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lbl_deadline">
+       <property name="text">
+        <string>Deadline:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDateEdit" name="de_deadline">
+       <property name="dateTime">
+        <datetime>
+         <hour>23</hour>
+         <minute>0</minute>
+         <second>0</second>
+         <year>2024</year>
+         <month>12</month>
+         <day>31</day>
+        </datetime>
+       </property>
+       <property name="maximumDateTime">
+        <datetime>
+         <hour>21</hour>
+         <minute>59</minute>
+         <second>59</second>
+         <year>2050</year>
+         <month>12</month>
+         <day>31</day>
+        </datetime>
+       </property>
+       <property name="minimumDateTime">
+        <datetime>
+         <hour>21</hour>
+         <minute>0</minute>
+         <second>0</second>
+         <year>2022</year>
+         <month>9</month>
+         <day>13</day>
+        </datetime>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="lbl_priority">
+       <property name="text">
+        <string>Priority:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="cb_priority">
+       <item>
+        <property name="text">
+         <string>3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="lbl_machine">
+       <property name="text">
+        <string>Machine:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="cb_machine"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="lbl_status">
+       <property name="text">
+        <string>Status:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>form_lbl</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QComboBox" name="cb_status">
+       <item>
+        <property name="text">
+         <string>in_queue</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>in_progress</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>completed</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>OrderDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>OrderDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
