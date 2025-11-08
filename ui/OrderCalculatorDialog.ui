@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>615</width>
-    <height>537</height>
+    <width>431</width>
+    <height>257</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,33 +27,33 @@
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="lbl_product">
        <property name="text">
         <string>Product:</string>
        </property>
        <property name="class" stdset="0">
-        <string>lbl_form</string>
+        <string>form_lbl</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="comboBox"/>
+      <widget class="QComboBox" name="cb_product"/>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="lbl_machine">
        <property name="text">
         <string>Machine:</string>
        </property>
        <property name="class" stdset="0">
-        <string>lbl_form</string>
+        <string>form_lbl</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="comboBox_2"/>
+      <widget class="QComboBox" name="cb_machine"/>
      </item>
      <item row="2" column="1">
-      <widget class="QSpinBox" name="spinBox">
+      <widget class="QSpinBox" name="sb_quantity">
        <property name="minimum">
         <number>1</number>
        </property>
@@ -63,16 +63,31 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="lbl_quantity">
        <property name="text">
         <string>Quantity to produce:</string>
        </property>
        <property name="class" stdset="0">
-        <string>lbl_form</string>
+        <string>form_lbl</string>
        </property>
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_calculate">
+     <property name="styleSheet">
+      <string notr="true">background-color: #333333;
+    color: white;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 13px;</string>
+     </property>
+     <property name="text">
+      <string>Calculate</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QWidget" name="widget_efficiency" native="true">
@@ -83,7 +98,7 @@
          <string>Machine capacity:</string>
         </property>
         <property name="class" stdset="0">
-         <string>lbl_form</string>
+         <string>form_lbl</string>
         </property>
        </widget>
       </item>
@@ -101,25 +116,18 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
+    <widget class="QLabel" name="lblLocalStatus">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::StandardButton::Apply|QDialogButtonBox::StandardButton::Close</set>
+     <property name="styleSheet">
+      <string notr="true">background-color: #3C4B6E;</string>
      </property>
-     <property name="centerButtons">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="lblInfo">
      <property name="text">
-      <string>Estimated production time: XX h (XXX minutes)</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
+      <string/>
      </property>
     </widget>
    </item>
@@ -128,34 +136,18 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>OrderCalculator</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>customContextMenuRequested(QPoint)</signal>
+   <sender>OrderCalculator</sender>
+   <signal>accepted()</signal>
    <receiver>OrderCalculator</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>200</x>
-     <y>255</y>
+     <x>215</x>
+     <y>128</y>
     </hint>
     <hint type="destinationlabel">
-     <x>241</x>
-     <y>224</y>
+     <x>215</x>
+     <y>128</y>
     </hint>
    </hints>
   </connection>

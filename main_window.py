@@ -68,11 +68,21 @@ class MainWindow(QMainWindow):
                 # skip buttons from sidebar
                 if not getattr(btn, "isSidebar", False):
                     btn.setStyleSheet("""
+                    QPushButton {
                         background-color: #3A5F8F;
                         color: white;
                         font-weight: bold;
                         border-radius: 4px;
                         padding: 6px 10px;
+                    }
+
+                    QPushButton:hover {
+                        background-color: #4B74A6;
+                    }
+
+                    QPushButton:pressed {
+                        background-color: #2D4E75;
+                    }
                     """)
 
 

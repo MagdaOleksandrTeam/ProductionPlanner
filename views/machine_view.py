@@ -1,8 +1,9 @@
 from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QWidget, QTableWidgetItem
+
 from models.machine import MachineRepository, MachineRecipeRepository
-from dialogs import ConfirmDialog, MachineDialog, MachineRecipeDialog
+from dialogs.dialog_views import ConfirmDialog, MachineDialog, MachineRecipeDialog
 
 class MachineView(QWidget):
 # Main view for managing production machines. 
@@ -80,7 +81,7 @@ class MachineView(QWidget):
     
     # CRUD operations for machines
     def add_machine(self):
-        from dialogs import MachineDialog
+        from dialogs.dialog_views import MachineDialog
         dialog = MachineDialog()
         if dialog.exec():
             new_machine = dialog.get_machine()

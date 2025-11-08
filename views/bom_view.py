@@ -1,9 +1,10 @@
 from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QWidget, QTableWidgetItem
+
 from models.bom import BOMRepository
-from dialogs import BOMDialog, ConfirmDialog
-from .bom_calculator_dialog import BOMCalculatorDialog
+from dialogs.dialog_views import BOMDialog, ConfirmDialog
+from dialogs.bom_calculator_dialog import BOMCalculatorDialog
 
 class BOMView(QWidget):
     # Signal to send status msg (info, success, warning, error)

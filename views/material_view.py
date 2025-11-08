@@ -1,8 +1,9 @@
 from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QWidget, QTableWidgetItem
+
 from models.material import MaterialRepository
-from dialogs import MaterialDialog, ConfirmDialog
+from dialogs.dialog_views import MaterialDialog, ConfirmDialog
 
 class MaterialView(QWidget):
     # Signal to send status msg (info, success, warning, error)

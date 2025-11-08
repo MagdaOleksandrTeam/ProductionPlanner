@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #F6F7FB;</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4">
@@ -248,17 +248,7 @@ padding: 8px 12px;</string>
     <enum>Qt::LayoutDirection::LeftToRight</enum>
    </property>
    <property name="styleSheet">
-    <string notr="true">QStatusBar {
-                    background-color: #3C4B6E;
-                    font-size: 12px;
-                    font-weight: bold;
-                    padding: 8px 10px;
-                    }
-
-QStatusBar[status='success'] { color: #7DFF7A; }
-QStatusBar[status='error'] { color: #FF7B7B; }
-QStatusBar[status='info'] { color: #6ECBFF; }
-QStatusBar[status=&quot;warning&quot;]{color: #FFB300;}</string>
+    <string notr="true"/>
    </property>
   </widget>
  </widget>

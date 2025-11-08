@@ -1,8 +1,9 @@
 from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QWidget, QTableWidgetItem
+
 from models.product import ProductRepository
-from dialogs import ProductDialog, ConfirmDialog
+from dialogs.dialog_views import ProductDialog, ConfirmDialog
 
 class ProductView(QWidget):
     # Signal to send status msg (info, success, warning, error)

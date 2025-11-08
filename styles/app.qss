@@ -1,4 +1,4 @@
-/* ====== SIDEBAR ====== */
+/* ============= SIDEBAR ============== */
 QWidget#sidebarWidget {
     background-color: #1E3A5F;
     border-top-right-radius: 15px;
@@ -28,7 +28,7 @@ QWidget#sidebarWidget QPushButton:checked {
 }
 
 
-/* ====== TABLE ====== */
+/* =========== TABLE ============= */
 QTableWidget {
 	background-color: #ffffff;
 	alternate-background-color: #f2f5fa;
@@ -47,7 +47,7 @@ QHeaderView::section {
 }
 
 
-/* ====== LABEL ====== */
+/* ============= LABEL ============ */
 QLabel#lblTitle {
     font-size: 17px;
     font-weight: bold;
@@ -76,7 +76,7 @@ QLabel#lblHint {
     padding: 4px;
 }
 
-/* ====== DIALOGS ====== */
+/* ============== DIALOGS ============ */
 QDialog {
     background-color: #F4F5F7;
     border-radius: 8px;
@@ -95,14 +95,46 @@ QDialogButtonBox QPushButton:hover {
     background-color: #444444;
 }
 
-QLabel.form_lbl {
+
+/*======= FORM STYLES =========*/
+
+QLabel[class="form_lbl"] {
     font-weight: bold;
     font-size: 14px;
     color: #2c3e50;
     padding: 3px 0;
 }
 
-Qlabel.lbl_value {
+QLabel[class="lbl_value"] {
     font-size: 14px;
     color: #333333;
 }
+
+
+/* ============== STATUS BAR ============= */
+QStatusBar {
+    background-color: #3C4B6E;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px 10px;
+}
+
+QLabel#lblLocalStatus {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 8px;
+    border-radius: 4px;
+}
+
+/* ============ STATUS COLORS ========== */
+QStatusBar[status="success"],
+QLabel#lblLocalStatus[status="success"] { color: #7DFF7A; }
+
+QStatusBar[status="error"],
+QLabel#lblLocalStatus[status="error"] { color: #FF7B7B; }
+
+QStatusBar[status="info"],
+QLabel#lblLocalStatus[status="info"] { color: #6ECBFF; }
+
+QStatusBar[status="warning"],
+QLabel#lblLocalStatus[status="warning"] { color: #FFB300; }

@@ -1,6 +1,7 @@
 from PyQt6 import uic
-from PyQt6.QtCore import QDate
+from PyQt6.QtCore import QDate, QTimer
 from PyQt6.QtWidgets import QDialog, QTableWidgetItem
+
 from models.material import Material, MaterialRepository
 from models.product import Product, ProductRepository
 from models.bom import BOM, BOMRepository
@@ -268,6 +269,7 @@ class OrderDialog(QDialog):
         super().__init__()
         uic.loadUi("ui/OrderDialog.ui", self)
         
+        
         # Load products and machines
         self.cb_product.clear()
         self.cb_machine.clear()
@@ -365,7 +367,7 @@ class OrderDetailsDialog(QDialog):
         )
         self.val_created_date.setText(getattr(order, "created_date", "-"))
 
-        # Get bom materials
+        # Calculate required materials
         bom_items = BOMRepository.get_bom_by_product_id(order.product_id)
         self.tableMaterials.setRowCount(len(bom_items))
 
@@ -374,7 +376,7 @@ class OrderDetailsDialog(QDialog):
             if not material:
                 continue
 
-            # ważne: obliczamy *osobno* dla każdego materiału
+            # Calculating materials
             required_qty = bom.quantity_needed * order.quantity
 
             self.tableMaterials.setItem(row, 0, QTableWidgetItem(material.name))
@@ -385,8 +387,8 @@ class OrderDetailsDialog(QDialog):
 
         # button close
         self.buttonBox.rejected.connect(self.reject)
-        
-        
+            
+
 # --------------- Delete Dialog ------------------
 class ConfirmDialog(QDialog):
 # Confirmation dialog for delete actions
@@ -396,3 +398,10 @@ class ConfirmDialog(QDialog):
         self.lblMessage.setText(message)
         self.btn_confirm_dialog.accepted.connect(self.accept)
         self.btn_confirm_dialog.rejected.connect(self.reject)
+        
+        
+        
+#calculator ststuses        
+#self.show_local_status("No recipe data available for this product.", "warning")
+
+#self.show_local_status("Estimation completed successfully!", "success")

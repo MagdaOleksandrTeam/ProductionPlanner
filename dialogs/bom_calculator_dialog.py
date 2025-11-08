@@ -1,5 +1,6 @@
 from PyQt6 import uic
 from PyQt6.QtWidgets import QDialog, QTableWidgetItem
+
 from models.product import ProductRepository
 from models.bom import BOMRepository
 from models.material import MaterialRepository
