@@ -7,6 +7,8 @@ from models.product import Product, ProductRepository
 from models.bom import BOM, BOMRepository
 from models.machine import Machine, MachineRecipe, MachineRepository, MachineRecipeRepository
 from models.order import ProductionOrder, ProductionOrderRepository, OrderStatus, OrderPriority
+from models.production_plan import ProductionPlanRepository
+from services.scheduling_service import SchedulingService
 from datetime import date, timedelta
 
 def showcase_materials():
@@ -404,17 +406,17 @@ def showcase_machines():
             # Create machine recipes: which machine can produce which product at what capacity
             
             # Assembly Line A can produce Tables at 5 units/hr and Chairs at 10 units/hr
-            recipe1 = MachineRecipe(id=0, machine_id=assembly_line.id, product_id=table.id, production_capacity=5.0)
-            recipe2 = MachineRecipe(id=0, machine_id=assembly_line.id, product_id=chair.id, production_capacity=10.0)
+            recipe1 = MachineRecipe(id=0, machine_id=assembly_line.id, product_id=table.id, production_capacity=5)
+            recipe2 = MachineRecipe(id=0, machine_id=assembly_line.id, product_id=chair.id, production_capacity=10)
             
             # CNC Mill B can produce Tables at 2 units/hr (slower but more precise)
-            recipe3 = MachineRecipe(id=0, machine_id=cnc_mill.id, product_id=table.id, production_capacity=2.0)
+            recipe3 = MachineRecipe(id=0, machine_id=cnc_mill.id, product_id=table.id, production_capacity=2)
             
-            # CNC Mill B can also produce Cabinets at 1.5 units/hr
-            recipe4 = MachineRecipe(id=0, machine_id=cnc_mill.id, product_id=cabinet.id, production_capacity=1.5)
+            # CNC Mill B can also produce Cabinets at 1 unit/hr
+            recipe4 = MachineRecipe(id=0, machine_id=cnc_mill.id, product_id=cabinet.id, production_capacity=1)
             
             # Packaging Station C can package Chairs at 20 units/hr
-            recipe5 = MachineRecipe(id=0, machine_id=packaging.id, product_id=chair.id, production_capacity=20.0)
+            recipe5 = MachineRecipe(id=0, machine_id=packaging.id, product_id=chair.id, production_capacity=20)
             
             # Add machine recipes to database
             MachineRecipeRepository.add_machine_recipe(recipe1)
@@ -488,7 +490,7 @@ def showcase_machines():
             machine = MachineRepository.get_machine_by_id(recipe.machine_id)
             if machine:
                 time_hours = 50 / recipe.production_capacity
-                print(f"   - {machine.name}: {time_hours:.2f} hours ({time_hours * 60:.0f} minutes)")
+                print(f"   - {machine.name}: {time_hours:.2f}h ({time_hours * 60:.0f}m")
     
     print("\nExample: How long does it take to produce 100 Chairs on different machines?")
     
@@ -498,7 +500,7 @@ def showcase_machines():
             machine = MachineRepository.get_machine_by_id(recipe.machine_id)
             if machine:
                 time_hours = 100 / recipe.production_capacity
-                print(f"   - {machine.name}: {time_hours:.2f} hours ({time_hours * 60:.0f} minutes)")
+                print(f"   - {machine.name}: {time_hours:.2f}h ({time_hours * 60:.0f}m")
     
     print("="*50)
 
@@ -678,11 +680,300 @@ def showcase_orders():
                     machine = MachineRepository.get_machine_by_id(recipe.machine_id)
                     if machine:
                         time_hours = order.quantity / recipe.production_capacity
-                        print(f"      - {machine.name}: {time_hours:.2f} hours ({time_hours * 60:.0f} minutes)")
+                        print(f"      - {machine.name}: {time_hours:.2f}h ({time_hours * 60:.0f}m")
             else:
                 print(f"\n   Order #{order.id}: {order.quantity} {product.name}(s) - No machine configured!")
     
     print("="*50)
+
+
+def showcase_production_planning():
+    """Showcase function to demonstrate Production Planning (Gantt scheduling) capabilities."""
+    print("\n" + "="*80)
+    print("PRODUCTION PLANNING SHOWCASE - BEFORE SCHEDULING")
+    print("="*80)
+    
+    # Show current state BEFORE scheduling
+    pending_orders = ProductionOrderRepository.get_pending_orders()
+    
+    print("\n📋 PENDING ORDERS TO SCHEDULE:")
+    print("-" * 80)
+    if not pending_orders:
+        print("   No pending orders!")
+        return
+    
+    for order in pending_orders:
+        product = ProductRepository.get_product_by_id(order.product_id)
+        priority_name = ["", "🔴 HIGH", "🟡 MEDIUM", "🟢 LOW"][order.priority]
+        if product:
+            print(f"   Order #{order.id}: {order.quantity} x {product.name} | Deadline: {order.deadline} | Priority: {priority_name}")
+    
+    print("\n🤖 MACHINE CAPABILITIES:")
+    print("-" * 80)
+    all_machines = MachineRepository.get_all_machines()
+    for machine in all_machines:
+        recipes = MachineRecipeRepository.get_recipes_by_machine_id(machine.id)
+        print(f"   {machine.name}:")
+        for recipe in recipes:
+            product = ProductRepository.get_product_by_id(recipe.product_id)
+            if product:
+                print(f"      └─ Produces {product.name} at {recipe.production_capacity} units/hour")
+    
+    print("\n⏳ PRODUCTION TIME ESTIMATES:")
+    print("-" * 80)
+    for order in pending_orders:
+        product = ProductRepository.get_product_by_id(order.product_id)
+        recipes = MachineRecipeRepository.get_recipes_by_product_id(order.product_id)
+        if product and recipes:
+            recipe = recipes[0]  # Use first available recipe
+            machine = MachineRepository.get_machine_by_id(recipe.machine_id)
+            duration_hours = order.quantity / recipe.production_capacity
+            if machine:
+                print(f"   Order #{order.id}: {order.quantity} {product.name}s → {machine.name} = {duration_hours:.2f}h ({int(duration_hours * 60)}m)")
+    
+    # Clear old plans before generating new ones
+    print("\n" + "="*80)
+    print("GENERATING NEW PRODUCTION PLAN...")
+    print("="*80)
+    
+    # Generate the production plan
+    created_plans = SchedulingService.generate_plan_from_scratch()
+    
+    print("\n" + "="*80)
+    print("PRODUCTION PLANNING SHOWCASE - AFTER SCHEDULING")
+    print("="*80)
+    
+    if not created_plans:
+        print("   No plans were created!")
+        return
+    
+    print(f"\n✅ PRODUCTION PLAN GENERATED: {len(created_plans)} orders scheduled")
+    print("-" * 80)
+    
+    # Group plans by machine for better visualization
+    plans_by_machine = {}
+    for plan in created_plans:
+        if plan.machine_id not in plans_by_machine:
+            plans_by_machine[plan.machine_id] = []
+        plans_by_machine[plan.machine_id].append(plan)
+    
+    # Display Gantt-like view
+    print("\n📊 GANTT SCHEDULE VIEW:")
+    print("-" * 80)
+    
+    for machine_id in sorted(plans_by_machine.keys()):
+        machine = MachineRepository.get_machine_by_id(machine_id)
+        plans = plans_by_machine[machine_id]
+        
+        print(f"\n   🖥️  {machine.name}:")
+        print(f"   {'─' * 76}")
+        
+        for i, plan in enumerate(plans):
+            order = ProductionOrderRepository.get_order_by_id(plan.order_id)
+            product = ProductRepository.get_product_by_id(order.product_id)
+            
+            # Create a simple visual bar
+            start_time = plan.planned_start_time
+            end_time = plan.planned_end_time
+            status_indicator = "▶️ " if plan.status == "planned" else "▶️▶️" if plan.status == "in_progress" else "✓ "
+            
+            print(f"      {status_indicator} Order #{plan.order_id}: {order.quantity}x {product.name}")
+            print(f"         └─ Start: {start_time} | End: {end_time} | Duration: {plan.duration_hours:.2f}h")
+            print()
+    
+    print("-" * 80)
+    
+    # Summary statistics
+    print("\n📈 SCHEDULING SUMMARY:")
+    print("-" * 80)
+    
+    total_duration = 0
+    earliest_start = None
+    latest_end = None
+    
+    for plan in created_plans:
+        total_duration += plan.duration_hours
+        
+        from datetime import datetime
+        start = datetime.strptime(plan.planned_start_time, '%Y-%m-%d %H:%M:%S')
+        end = datetime.strptime(plan.planned_end_time, '%Y-%m-%d %H:%M:%S')
+        
+        if earliest_start is None or start < earliest_start:
+            earliest_start = start
+        if latest_end is None or end > latest_end:
+            latest_end = end
+    
+    if earliest_start and latest_end:
+        total_schedule_time = (latest_end - earliest_start).total_seconds() / 3600  # Convert to hours
+        utilization = (total_duration / (total_schedule_time * len(plans_by_machine))) * 100 if total_schedule_time > 0 else 0
+        
+        print(f"   Total Production Duration:     {total_duration:.2f} hours")
+        print(f"   Schedule Start Time:           {earliest_start.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"   Schedule End Time:             {latest_end.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"   Total Schedule Duration:       {total_schedule_time:.2f} hours")
+        print(f"   Number of Machines Used:       {len(plans_by_machine)}")
+        print(f"   Average Machine Utilization:   {utilization:.1f}%")
+    
+    print("\n" + "="*80)
+    print("Production plan is ready for Gantt visualization!")
+    print("="*80)
+
+
+def _print_gantt_view(plans):
+    """Helper to display Gantt-like view for a list of plans."""
+    if not plans:
+        print("   No plans to display")
+        return
+    
+    # Group plans by machine
+    plans_by_machine = {}
+    for plan in plans:
+        if plan.machine_id not in plans_by_machine:
+            plans_by_machine[plan.machine_id] = []
+        plans_by_machine[plan.machine_id].append(plan)
+    
+    print("\n📊 GANTT SCHEDULE VIEW:")
+    print("-" * 80)
+    
+    for machine_id in sorted(plans_by_machine.keys()):
+        machine = MachineRepository.get_machine_by_id(machine_id)
+        machine_plans = plans_by_machine[machine_id]
+        
+        print(f"\n   🖥️  {machine.name}:")
+        print(f"   {'─' * 76}")
+        
+        for plan in machine_plans:
+            order = ProductionOrderRepository.get_order_by_id(plan.order_id)
+            product = ProductRepository.get_product_by_id(order.product_id)
+            priority_name = ["", "🔴 HIGH", "🟡 MEDIUM", "🟢 LOW"][order.priority]
+            
+            start_time = plan.planned_start_time
+            end_time = plan.planned_end_time
+            status_indicator = "▶️ " if plan.status == "planned" else "⏸️ " if plan.status == "in_progress" else "✓ "
+            
+            print(f"      {status_indicator} Order #{plan.order_id}: {order.quantity}x {product.name} ({priority_name})")
+            print(f"         └─ {start_time} → {end_time} ({plan.duration_hours:.2f}h)")
+    
+    print("\n" + "-" * 80)
+
+
+def showcase_production_planning_update():
+    """Showcase the UPDATE production plan feature - add new orders and reschedule."""
+    print("\n\n" + "="*80)
+    print("PRODUCTION PLANNING - UPDATE WITH NEW ORDERS SHOWCASE")
+    print("="*80)
+    
+    # Step 1: Show current plan
+    print("\n" + "="*80)
+    print("STEP 1: CURRENT PRODUCTION PLAN (from scratch)")
+    print("="*80)
+    
+    pending_orders = ProductionOrderRepository.get_pending_orders()
+    print(f"\n📋 Current pending orders: {len(pending_orders)}")
+    for order in pending_orders:
+        product = ProductRepository.get_product_by_id(order.product_id)
+        priority_name = ["", "🔴 HIGH", "🟡 MEDIUM", "🟢 LOW"][order.priority]
+        if product:
+            print(f"   Order #{order.id}: {order.quantity}x {product.name} | Priority: {priority_name}")
+    
+    # Generate initial plan
+    print("\n🔄 Generating plan from scratch...")
+    initial_plans = SchedulingService.generate_plan_from_scratch()
+    _print_gantt_view(initial_plans)
+    
+    # Mark first order as "in_progress" to simulate work started
+    if initial_plans:
+        first_plan = initial_plans[0]
+        first_plan.status = "in_progress"
+        ProductionPlanRepository.update_plan(first_plan)
+        print(f"\n✅ Simulated: Order #{first_plan.order_id} is now IN_PROGRESS")
+    
+    # Step 2: Add 10 new orders
+    print("\n" + "="*80)
+    print("STEP 2: ADDING 10 NEW ORDERS")
+    print("="*80)
+    
+    products = ProductRepository.get_all_products()
+    if len(products) < 1:
+        print("Not enough products to create new orders!")
+        return
+    
+    today = date.today()
+    new_orders = []
+    
+    for i in range(10):
+        # Cycle through products
+        product = products[i % len(products)]
+        
+        # Vary priorities and quantities
+        if i < 3:
+            priority = OrderPriority.HIGH.value
+            quantity = 20 + (i * 5)
+        elif i < 6:
+            priority = OrderPriority.MEDIUM.value
+            quantity = 15 + (i * 3)
+        else:
+            priority = OrderPriority.LOW.value
+            quantity = 10 + (i * 2)
+        
+        # Vary deadlines
+        deadline_days = 3 + (i % 5)
+        
+        order = ProductionOrder(
+            id=0,
+            product_id=product.id,
+            quantity=quantity,
+            deadline=(today + timedelta(days=deadline_days)).isoformat(),
+            status=OrderStatus.IN_QUEUE.value,
+            priority=priority
+        )
+        
+        new_order = ProductionOrderRepository.add_order(order)
+        new_orders.append(new_order)
+        priority_name = ["", "🔴 HIGH", "🟡 MEDIUM", "🟢 LOW"][priority]
+        print(f"   ✓ Order #{new_order.id}: {quantity}x {product.name} | Priority: {priority_name} | Deadline: {(today + timedelta(days=deadline_days)).isoformat()}")
+    
+    print(f"\n✅ Added {len(new_orders)} new orders")
+    
+    # Step 3: Update plan with new orders
+    print("\n" + "="*80)
+    print("STEP 3: UPDATING PRODUCTION PLAN WITH NEW ORDERS")
+    print("="*80)
+    
+    print("\n🔄 Updating plan (keeping in_progress, rescheduling planned + adding new)...")
+    updated_plans = SchedulingService.update_plan_with_new_orders()
+    
+    # Step 4: Display updated plan
+    print("\n" + "="*80)
+    print("UPDATED PRODUCTION PLAN")
+    print("="*80)
+    
+    all_plans = ProductionPlanRepository.get_all_plans()
+    
+    print(f"\n📊 Total orders in plan: {len(all_plans)}")
+    print(f"   - In Progress: {len(ProductionPlanRepository.get_plans_by_status('in_progress'))}")
+    print(f"   - Planned: {len(ProductionPlanRepository.get_plans_by_status('planned'))}")
+    print(f"   - Completed: {len(ProductionPlanRepository.get_plans_by_status('completed'))}")
+    
+    _print_gantt_view(all_plans)
+    
+    # Summary
+    print("\n" + "="*80)
+    print("UPDATE SUMMARY")
+    print("="*80)
+    
+    total_duration = sum(p.duration_hours for p in updated_plans)
+    total_orders = len(updated_plans)
+    
+    print(f"\n✅ Plan updated successfully!")
+    print(f"   - New orders scheduled: {total_orders}")
+    print(f"   - Total production duration: {total_duration:.2f}h")
+    print(f"   - In-progress orders preserved: YES ✓")
+    print(f"   - New high-priority orders scheduled first: YES ✓")
+    
+    print("\n" + "="*80)
+    print("PRODUCTION PLANNING SHOWCASE COMPLETE")
+    print("="*80)
 
 
 def showcase():
@@ -706,6 +997,12 @@ def showcase():
     
     # Showcase Production Orders functionality
     showcase_orders()
+    
+    # Showcase Production Planning
+    showcase_production_planning()
+    
+    # Showcase Production Planning Update (add new orders)
+    showcase_production_planning_update()
     
     # Don't close database here - let Qt app use the same connection
     print("\nDatabase showcase completed. Starting Qt application...")

@@ -61,6 +61,7 @@ def init_db():
     from .bom import BOMRepository
     from .machine import MachineRepository, MachineRecipeRepository
     from .order import ProductionOrderRepository
+    from .production_plan import ProductionPlanRepository
     
     # Initialize tables for all repositories - this will create the DB file properly
     
@@ -81,5 +82,8 @@ def init_db():
     
     ProductionOrderRepository.init_table()
     print("Production orders table initialized.")
+    
+    ProductionPlanRepository.init_table()
+    print("Production plans table initialized.")
     
     print("Database initialization completed successfully!")
