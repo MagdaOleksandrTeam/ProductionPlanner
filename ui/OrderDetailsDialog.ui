@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>510</height>
+    <height>519</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -263,6 +263,64 @@
           <string>Unit</string>
          </property>
         </column>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="framePriorityHint">
+        <property name="styleSheet">
+         <string notr="true">color: #555;
+font-weight: bold;
+font-size: 10pt;
+padding: 4px;
+font-weight: bold;
+background-color: #f0f0f0;
+border-radius: 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="lbl_guide">
+           <property name="text">
+            <string>💡 Priority guide:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbl_1">
+           <property name="styleSheet">
+            <string notr="true">color: red;</string>
+           </property>
+           <property name="text">
+            <string>1 = HIGH 🔴</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbl_2">
+           <property name="styleSheet">
+            <string notr="true">color: orange;</string>
+           </property>
+           <property name="text">
+            <string>2 = MEDIUM 🟡</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbl_3">
+           <property name="styleSheet">
+            <string notr="true">color: green</string>
+           </property>
+           <property name="text">
+            <string>3 = LOW 🟢</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>

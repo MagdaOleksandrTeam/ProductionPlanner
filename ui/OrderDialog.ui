@@ -76,7 +76,7 @@
       <widget class="QDateEdit" name="de_deadline">
        <property name="dateTime">
         <datetime>
-         <hour>23</hour>
+         <hour>21</hour>
          <minute>0</minute>
          <second>0</second>
          <year>2024</year>
@@ -86,7 +86,7 @@
        </property>
        <property name="maximumDateTime">
         <datetime>
-         <hour>21</hour>
+         <hour>19</hour>
          <minute>59</minute>
          <second>59</second>
          <year>2050</year>
@@ -96,7 +96,7 @@
        </property>
        <property name="minimumDateTime">
         <datetime>
-         <hour>21</hour>
+         <hour>17</hour>
          <minute>0</minute>
          <second>0</second>
          <year>2022</year>
@@ -181,6 +181,64 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QFrame" name="framePriorityHint">
+     <property name="styleSheet">
+      <string notr="true">color: #555;
+font-weight: bold;
+font-size: 10pt;
+padding: 4px;
+font-weight: bold;
+background-color: #f0f0f0;
+border-radius: 4px;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="lbl_guide">
+        <property name="text">
+         <string>💡 Priority guide:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lbl_1">
+        <property name="styleSheet">
+         <string notr="true">color: red;</string>
+        </property>
+        <property name="text">
+         <string>1 = HIGH 🔴</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lbl_2">
+        <property name="styleSheet">
+         <string notr="true">color: orange;</string>
+        </property>
+        <property name="text">
+         <string>2 = MEDIUM 🟡</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lbl_3">
+        <property name="styleSheet">
+         <string notr="true">color: green</string>
+        </property>
+        <property name="text">
+         <string>3 = LOW 🟢</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
