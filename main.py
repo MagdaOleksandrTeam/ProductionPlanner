@@ -9,6 +9,7 @@ from models.machine import Machine, MachineRecipe, MachineRepository, MachineRec
 from models.order import ProductionOrder, ProductionOrderRepository, OrderStatus, OrderPriority
 from models.production_plan import ProductionPlanRepository
 from services.scheduling_service import SchedulingService
+from services.mrp_service import MRPService
 from datetime import date, timedelta
 
 def showcase_materials():
@@ -976,6 +977,20 @@ def showcase_production_planning_update():
     print("="*80)
 
 
+def showcase_mrp():
+    """Showcase MRP (Material Requirements Planning) service."""
+    print("\n\n" + "="*80)
+    print("MATERIAL REQUIREMENTS PLANNING (MRP) SHOWCASE")
+    print("="*80)
+    
+    # Generate procurement plan
+    plan = MRPService.generate_procurement_plan()
+    
+    print("\n" + "="*80)
+    print("MRP SHOWCASE COMPLETE")
+    print("="*80)
+
+
 def showcase():
     
     # Initialize database (creates file and directory)
@@ -1003,6 +1018,9 @@ def showcase():
     
     # Showcase Production Planning Update (add new orders)
     showcase_production_planning_update()
+    
+    # Showcase MRP (Material Requirements Planning)
+    showcase_mrp()
     
     # Don't close database here - let Qt app use the same connection
     print("\nDatabase showcase completed. Starting Qt application...")
