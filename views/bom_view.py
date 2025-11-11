@@ -65,8 +65,8 @@ class BOMView(QWidget):
             product = ProductRepository.get_product_by_id(bom_entry.product_id)
             material = MaterialRepository.get_material_by_id(bom_entry.material_id)
 
-            product_display = f"{product.id}. {product.name}" if product else f"#{bom_entry.product_id}"
-            material_display = f"{material.id}. {material.name} ({material.unit})" if material else f"#{bom_entry.material_id}"
+            product_display = f"{product.name}" if product else f"#{bom_entry.product_id}"
+            material_display = f"{material.name} ({material.unit})" if material else f"#{bom_entry.material_id}"
 
             self.tableBOM.setItem(row, 0, QTableWidgetItem(str(bom_entry.id)))
             self.tableBOM.setItem(row, 1, QTableWidgetItem(product_display))

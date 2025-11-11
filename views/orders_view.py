@@ -85,7 +85,11 @@ class OrdersView(QWidget):
 
             # Priority value (1 = high, 2 = medium, 3 = low)
             priority_value = int(order.priority)
-            priority_item = QTableWidgetItem(str(priority_value))
+            
+            # --- Map numeric value to string ---
+            priority_text = {1: "HIGH", 2: "MEDIUM", 3: "LOW"}.get(priority_value, "UNKNOWN")
+            
+            priority_item = QTableWidgetItem(priority_text)
             self.tableOrders.setItem(row, 6, priority_item)
 
             # Color by priority

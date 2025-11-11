@@ -116,12 +116,12 @@
      </column>
      <column>
       <property name="text">
-       <string>Product id</string>
+       <string>Product</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Material id</string>
+       <string>Material</string>
       </property>
      </column>
      <column>

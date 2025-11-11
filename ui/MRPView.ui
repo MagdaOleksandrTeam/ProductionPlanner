@@ -49,22 +49,37 @@
      </attribute>
      <column>
       <property name="text">
-       <string>Product</string>
+       <string>Material</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Required quantity</string>
+       <string>Unit</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Available quantity</string>
+       <string>Quantity needed</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>To order</string>
+       <string>Quantity in stock</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Difference</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Deadline</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Demanding orders</string>
       </property>
      </column>
     </widget>

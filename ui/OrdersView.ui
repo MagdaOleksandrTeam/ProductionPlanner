@@ -208,7 +208,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>💡 Double-click order for details / right-click for actions</string>
+         <string>💡 Double-click order for details</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>

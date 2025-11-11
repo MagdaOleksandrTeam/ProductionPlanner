@@ -31,7 +31,6 @@ QWidget#sidebarWidget QPushButton:checked {
 /* =========== TABLE ============= */
 QTableWidget {
 	background-color: #ffffff;
-	alternate-background-color: #f2f5fa;
 	gridline-color: #d0d4da;
 	font-size: 13px;
 	border: 1px solid #ccc;
