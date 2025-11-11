@@ -5,9 +5,10 @@ Helps logists determine what materials to order and when.
 """
 
 from datetime import datetime
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from dataclasses import dataclass
 from models.order import ProductionOrderRepository
+from models.product import ProductRepository
 from models.material import MaterialRepository
 from models.bom import BOMRepository
 from models.production_plan import ProductionPlanRepository
@@ -21,12 +22,12 @@ class MaterialRequirement:
     unit: str
     quantity_needed: float
     quantity_in_stock: float
-    quantity_shortage: float  # negative means surplus, positive means shortage
+    quantity_difference: float  # negative means surplus, positive means shortage
     deadline: str  # when this material is needed (based on order start time)
     orders_requiring: List[int]  # list of order IDs that need this material
     
     def __str__(self) -> str:
-        status = "✓ OK" if self.quantity_shortage <= 0 else f"⚠️  SHORTAGE"
+        status = "+ OK" if self.quantity_difference <= 0 else f"- ORDER"
         return f"{self.material_name} ({self.unit}): Need {self.quantity_needed}, Have {self.quantity_in_stock} [{status}]"
 
 
@@ -108,7 +109,7 @@ class MRPService:
         requirements: List[MaterialRequirement] = []
         
         for material_id, req in material_reqs.items():
-            shortage = req["quantity_needed"] - req["in_stock"]
+            difference = req["quantity_needed"] - req["in_stock"]
             
             req_obj = MaterialRequirement(
                 material_id=material_id,
@@ -116,7 +117,7 @@ class MRPService:
                 unit=req["unit"],
                 quantity_needed=req["quantity_needed"],
                 quantity_in_stock=req["in_stock"],
-                quantity_shortage=shortage,
+                quantity_difference=difference,
                 deadline=req["deadline"],
                 orders_requiring=req["orders"]
             )
@@ -129,16 +130,13 @@ class MRPService:
     def generate_procurement_plan() -> Dict:
         """
         Generates a procurement plan for logists.
-        Shows what materials need to be ordered and when.
+        Shows what materials need to be ordered and their deadlines.
         
         Returns:
-            Dictionary with:
-            - 'all_materials': all material requirements
-            - 'shortage_materials': only materials with shortage
-            - 'summary': counts and totals
+            Dictionary with material info and procurement summary
         """
         print("\n" + "="*80)
-        print("GENERATING PROCUREMENT PLAN FOR LOGISTS")
+        print("PROCUREMENT PLAN - WHAT TO ORDER & WHEN PRODUCTION STOPS")
         print("="*80)
         
         # Get all material requirements
@@ -146,74 +144,31 @@ class MRPService:
         
         if not all_requirements:
             print("\nNo materials needed - no production planned")
-            return {
-                "all_materials": [],
-                "shortage_materials": [],
-                "summary": {
-                    "total_materials": 0,
-                    "materials_with_shortage": 0,
-                    "total_shortage_value": 0
-                }
-            }
+            return {"all_materials": [], "shortage_materials": [], "summary": {}}
         
         # Filter materials with shortage
-        shortage_materials = [r for r in all_requirements if r.quantity_shortage > 0]
-        ok_materials = [r for r in all_requirements if r.quantity_shortage <= 0]
+        shortage_materials = [r for r in all_requirements if r.quantity_difference > 0]
         
-        print(f"\n📦 MATERIAL REQUIREMENTS SUMMARY:")
-        print("-" * 80)
-        print(f"   Total materials needed: {len(all_requirements)}")
-        print(f"   Materials with shortage: {len(shortage_materials)}")
-        print(f"   Materials with sufficient stock: {len(ok_materials)}")
+        print(f"\n{'MATERIAL':<15} {'HAVE':<10} {'NEED':<10} {'DIFFERENCE':<12} {'DEADLINE':<19}")
+        print("-" * 70)
         
-        # Display materials with shortage (urgent for logists)
-        if shortage_materials:
-            print(f"\n🚨 URGENT - MATERIALS TO ORDER (SHORTAGE):")
-            print("-" * 80)
+        for req in shortage_materials:
+            have = f"{req.quantity_in_stock:.1f} {req.unit}"
+            need = f"{req.quantity_needed:.1f} {req.unit}"
+            difference = f"{req.quantity_difference:.1f} {req.unit}"
+            deadline = req.deadline.split()[0]  # Just date
             
-            for req in shortage_materials:
-                print(f"\n   📌 {req.material_name}")
-                print(f"      ├─ Needed: {req.quantity_needed:.2f} {req.unit}")
-                print(f"      ├─ In Stock: {req.quantity_in_stock:.2f} {req.unit}")
-                print(f"      ├─ ORDER: {req.quantity_shortage:.2f} {req.unit}")
-                print(f"      ├─ Deadline: {req.deadline}")
-                print(f"      └─ For Orders: #{', #'.join(map(str, req.orders_requiring))}")
+            print(f"{req.material_name:<15} {have:<10} {need:<10} {difference:<12} {deadline:<19}")
         
-        # Display materials with sufficient stock
-        if ok_materials:
-            print(f"\n✅ MATERIALS WITH SUFFICIENT STOCK:")
-            print("-" * 80)
-            
-            for req in ok_materials:
-                surplus = -req.quantity_shortage
-                print(f"   {req.material_name}: Have {req.quantity_in_stock:.2f} {req.unit}, Need {req.quantity_needed:.2f} {req.unit} (Surplus: {surplus:.2f} {req.unit})")
+        print("-" * 70)
         
-        # Summary for procurement team
-        print(f"\n" + "="*80)
-        print(f"PROCUREMENT SUMMARY FOR LOGISTS:")
-        print("="*80)
         
-        total_shortage_value = sum(r.quantity_shortage for r in shortage_materials)
-        
-        print(f"\n   Total materials with shortage: {len(shortage_materials)}")
-        print(f"   Total units to order: {total_shortage_value:.2f}")
+        total_to_order = sum(r.quantity_difference for r in shortage_materials)
+        print(f"   ➕ Total to order: {total_to_order:.1f} units (across {len(shortage_materials)} materials)")
         
         if shortage_materials:
-            # Group by deadline
-            deadlines = {}
-            for req in shortage_materials:
-                deadline = req.deadline.split()[0]  # Get just the date
-                if deadline not in deadlines:
-                    deadlines[deadline] = []
-                deadlines[deadline].append(req)
-            
-            print(f"\n   📅 ORDERED BY DEADLINE:")
-            print("-" * 80)
-            for deadline in sorted(deadlines.keys()):
-                materials = deadlines[deadline]
-                print(f"      {deadline}: {len(materials)} material(s) needed")
-                for req in materials:
-                    print(f"         - {req.material_name}: order {req.quantity_shortage:.2f} {req.unit}")
+            earliest_deadline = min(r.deadline for r in shortage_materials).split()[0]
+            print(f"   ⏰ Earliest deadline: {earliest_deadline}")
         
         print("\n" + "="*80)
         
@@ -223,6 +178,7 @@ class MRPService:
             "summary": {
                 "total_materials": len(all_requirements),
                 "materials_with_shortage": len(shortage_materials),
-                "total_shortage_value": total_shortage_value
+                "total_shortage_value": total_to_order
             }
         }
+
