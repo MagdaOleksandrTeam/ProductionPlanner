@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>794</width>
-    <height>540</height>
+    <width>840</width>
+    <height>556</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -71,6 +71,13 @@
       </item>
       <item>
        <widget class="QLineEdit" name="leOrder"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_search">
+        <property name="text">
+         <string>Search</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -136,7 +143,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="btn_calculate_mrp">
         <property name="text">
          <string>Calculate MRP</string>
         </property>
@@ -146,6 +153,16 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblHint">
+     <property name="text">
+      <string>Press 'Calculate MRP' to analyze material requirements</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
     </widget>
    </item>
   </layout>
