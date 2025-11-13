@@ -10,7 +10,7 @@ class MainWindow(QMainWindow):
         # load the UI from .ui file
         uic.loadUi("ui/MainWindow.ui", self)
         # load stylesheet app.qss
-        with open("styles/app.qss", "r") as f:
+        with open("assets/app.qss", "r") as f:
             self.setStyleSheet(f.read())
 
         # Initialize all views

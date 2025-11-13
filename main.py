@@ -1032,7 +1032,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
 
-    qss_path = os.path.join(os.path.dirname(__file__), "styles", "app.qss")
+    qss_path = os.path.join(os.path.dirname(__file__), "assets", "app.qss")
     if os.path.exists(qss_path):
         with open(qss_path, "r") as f:
             app.setStyleSheet(f.read())

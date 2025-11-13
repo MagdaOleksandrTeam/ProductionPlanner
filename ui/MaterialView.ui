@@ -63,6 +63,10 @@
         <property name="text">
          <string>Search</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/search.svg</normaloff>../assets/icons/search.svg</iconset>
+        </property>
        </widget>
       </item>
      </layout>
@@ -136,6 +140,10 @@
         <property name="text">
          <string>Add</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/add.svg</normaloff>../assets/icons/add.svg</iconset>
+        </property>
         <property name="flat">
          <bool>true</bool>
         </property>
@@ -146,6 +154,10 @@
         <property name="text">
          <string>Edit</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/edit.svg</normaloff>../assets/icons/edit.svg</iconset>
+        </property>
         <property name="flat">
          <bool>true</bool>
         </property>
@@ -155,6 +167,10 @@
        <widget class="QPushButton" name="btn_deleteMaterial">
         <property name="text">
          <string>Delete</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/delete.svg</normaloff>../assets/icons/delete.svg</iconset>
         </property>
         <property name="flat">
          <bool>true</bool>

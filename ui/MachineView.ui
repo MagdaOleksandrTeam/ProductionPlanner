@@ -54,6 +54,10 @@
         <property name="text">
          <string>Search</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/search.svg</normaloff>../assets/icons/search.svg</iconset>
+        </property>
        </widget>
       </item>
      </layout>
@@ -135,6 +139,10 @@
         <property name="text">
          <string>Add Machine</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/add.svg</normaloff>../assets/icons/add.svg</iconset>
+        </property>
        </widget>
       </item>
       <item>
@@ -142,12 +150,20 @@
         <property name="text">
          <string>Edit Machine</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/edit.svg</normaloff>../assets/icons/edit.svg</iconset>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_deleteMachine">
         <property name="text">
          <string>Delete Machine</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/delete.svg</normaloff>../assets/icons/delete.svg</iconset>
         </property>
        </widget>
       </item>

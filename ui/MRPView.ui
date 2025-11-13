@@ -77,6 +77,10 @@
         <property name="text">
          <string>Search</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/search.svg</normaloff>../assets/icons/search.svg</iconset>
+        </property>
        </widget>
       </item>
      </layout>
@@ -146,6 +150,10 @@
        <widget class="QPushButton" name="btn_calculate_mrp">
         <property name="text">
          <string>Calculate MRP</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/calculate.svg</normaloff>../assets/icons/calculate.svg</iconset>
         </property>
         <property name="contentButton" stdset="0">
          <string>true</string>

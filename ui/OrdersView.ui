@@ -59,6 +59,10 @@
         <property name="text">
          <string>Show All</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/clear.svg</normaloff>../assets/icons/clear.svg</iconset>
+        </property>
         <property name="checkable">
          <bool>true</bool>
         </property>
@@ -68,6 +72,10 @@
        <widget class="QPushButton" name="btn_show_in_queue">
         <property name="text">
          <string>In Queue</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/pending.svg</normaloff>../assets/icons/pending.svg</iconset>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -79,6 +87,10 @@
         <property name="text">
          <string>In Progress</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/progress.svg</normaloff>../assets/icons/progress.svg</iconset>
+        </property>
         <property name="checkable">
          <bool>true</bool>
         </property>
@@ -88,6 +100,10 @@
        <widget class="QPushButton" name="btn_show_completed">
         <property name="text">
          <string>Completed</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/done.svg</normaloff>../assets/icons/done.svg</iconset>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -111,6 +127,10 @@
        <widget class="QPushButton" name="btn_search">
         <property name="text">
          <string>Search</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/search.svg</normaloff>../assets/icons/search.svg</iconset>
         </property>
        </widget>
       </item>
@@ -238,6 +258,10 @@
         <property name="text">
          <string>Add Order</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/add.svg</normaloff>../assets/icons/add.svg</iconset>
+        </property>
        </widget>
       </item>
       <item>
@@ -245,12 +269,20 @@
         <property name="text">
          <string>Edit Order</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/edit.svg</normaloff>../assets/icons/edit.svg</iconset>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_deleteOrder">
         <property name="text">
          <string>Delete Order</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/delete.svg</normaloff>../assets/icons/delete.svg</iconset>
         </property>
        </widget>
       </item>
@@ -261,6 +293,10 @@
     <widget class="QPushButton" name="btn_calculate_time">
      <property name="text">
       <string>Calculate Time</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../assets/icons/calculate.svg</normaloff>../assets/icons/calculate.svg</iconset>
      </property>
     </widget>
    </item>
