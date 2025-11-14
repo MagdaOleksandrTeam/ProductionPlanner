@@ -1027,7 +1027,7 @@ def showcase():
 
 
 if __name__ == "__main__":
-    showcase()
+    #showcase()
 
 
     app = QApplication(sys.argv)

@@ -37,32 +37,31 @@ class MRPView(QWidget):
                 self.tableMRP.setItem(row_position, 3, QTableWidgetItem(f"{material.quantity_in_stock:.2f}"))
 
                 # === Difference column (color-coded) ===
-                diff_value = material.quantity_difference
-                diff_item = QTableWidgetItem(f"{diff_value:.2f}")
-                diff_item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-
-                # Color by value
-                if diff_value > 0:
-                    # Shortage → red
-                    bg_color = QtGui.QColor("#e74c3c")
+                difference = material.quantity_needed - material.quantity_in_stock  # float
+                if difference > 0:
+                    # Shortage
+                    bg_color = QtGui.QColor("#e74c3c")  # czerwony
                     fg_color = QtGui.QColor("#ffffff")
-                elif diff_value < 0:
-                    # Surplus → green
-                    bg_color = QtGui.QColor("#27ae60")
+                    text = f"{difference:.2f} (Shortage)"
+                elif difference < 0:
+                    # Surplus
+                    bg_color = QtGui.QColor("#27ae60")  # zielony
                     fg_color = QtGui.QColor("#ffffff")
+                    text = f"{abs(difference):.2f} (Surplus)"
                 else:
-                    # neutral - grey
-                    bg_color = QtGui.QColor("#bdc3c7")
+                    # OK
+                    bg_color = QtGui.QColor("#bdc3c7")  # szary
                     fg_color = QtGui.QColor("#000000")
+                    text = "0.00 (OK)"
 
+                diff_item = QTableWidgetItem(text)
                 diff_item.setBackground(QtGui.QBrush(bg_color))
                 diff_item.setForeground(QtGui.QBrush(fg_color))
-                diff_item.setToolTip(
-                    "Positive = shortage (needs ordering)\nNegative = surplus (enough in stock)"
-                )
+                diff_item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
+
+                
                 self.tableMRP.setItem(row_position, 4, diff_item)
-
                 self.tableMRP.setItem(row_position, 5, QTableWidgetItem(material.deadline))
                 self.tableMRP.setItem(row_position, 6, QTableWidgetItem(", ".join(map(str, material.orders_requiring))))
                 self.statusMessage.emit("MRP calculation completed!", "success")
