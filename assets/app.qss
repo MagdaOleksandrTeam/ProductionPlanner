@@ -75,6 +75,11 @@ QLabel#lblHint {
     padding: 4px;
 }
 
+QFrame#frame_info QLabel{
+    font-size: 14px;
+    color: #333333;
+}
+
 /* ============== DIALOGS ============ */
 QDialog {
     background-color: #F4F5F7;
