@@ -993,9 +993,6 @@ def showcase_mrp():
 
 def showcase():
     
-    # Initialize database (creates file and directory)
-    init_db()
-    
     print("Production Planner started!")
     
     # Showcase Materials functionality
@@ -1027,7 +1024,11 @@ def showcase():
 
 
 if __name__ == "__main__":
-    #showcase()
+    
+    # Initialize database (creates file and directory)
+    init_db()
+    
+    showcase()
 
 
     app = QApplication(sys.argv)
