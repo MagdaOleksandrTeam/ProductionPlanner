@@ -1,4 +1,4 @@
-from PyQt6 import uic, QtGui
+from PyQt6 import uic, QtGui, QtCore
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QWidget, QTableWidgetItem
 
@@ -8,6 +8,17 @@ from models.order import ProductionOrderRepository
 from dialogs.dialog_views import OrderDialog, OrderDetailsDialog, ConfirmDialog
 from dialogs.order_calculator_dialog import OrderCalculatorDialog
 
+# Class for column priority
+class PriorityItem(QTableWidgetItem):
+    def __init__(self, text, value):
+        super().__init__(text)
+        self.value = value
+        self.setData(QtCore.Qt.ItemDataRole.DisplayRole, text)
+
+    def __lt__(self, other):
+        if isinstance(other, PriorityItem):
+            return self.value < other.value
+        return super().__lt__(other)
 
 class OrdersView(QWidget):
     """Main Orders view — shows all production orders and allows performing
@@ -52,9 +63,9 @@ class OrdersView(QWidget):
     #Load orders into the table. Optional filtering by status and search text.
         self.tableOrders.setRowCount(0)
         orders = ProductionOrderRepository.get_all_orders()
-        
+
         #Filter by order status
-        if status_filter:  
+        if status_filter:
             orders = [o for o in orders if o.status == status_filter]
             
         # Filter by product
@@ -62,17 +73,18 @@ class OrdersView(QWidget):
             orders = [o for o in orders if o.product_id == product_filter_id]
                 
         #Filter by search query (order ID or product name)
-        if search_text:    
+        if search_text:
             search_text = search_text.lower()
             orders = [o for o in orders
-                      if search_text in str(o.id).lower()
-                      or search_text in ProductRepository.get_product_by_id(o.product_id).name.lower()]
-        
-        # Populate the table
+                
+                    # Populate the table
+                    if search_text in str(o.id).lower()
+                    or search_text in ProductRepository.get_product_by_id(o.product_id).name.lower()]
+
         for order in orders:
             row = self.tableOrders.rowCount()
             self.tableOrders.insertRow(row)
-            
+
             product = ProductRepository.get_product_by_id(order.product_id)
             machine = MachineRepository.get_machine_by_id(order.assigned_machine_id)
 
@@ -85,12 +97,9 @@ class OrdersView(QWidget):
 
             # Priority value (1 = high, 2 = medium, 3 = low)
             priority_value = int(order.priority)
-            
-            # --- Map numeric value to string ---
-            priority_text = {1: "HIGH", 2: "MEDIUM", 3: "LOW"}.get(priority_value, "UNKNOWN")
-            
-            priority_item = QTableWidgetItem(priority_text)
-            self.tableOrders.setItem(row, 6, priority_item)
+            priority_text = {1: "HIGH", 2: "MEDIUM", 3: "LOW"}[priority_value]
+
+            priority_item = PriorityItem(priority_text, priority_value)
 
             # Color by priority
             if priority_value == 1: # high
@@ -99,8 +108,10 @@ class OrdersView(QWidget):
                 priority_item.setBackground(QtGui.QBrush(QtGui.QColor("#ffe066")))
             else: # low
                 priority_item.setBackground(QtGui.QBrush(QtGui.QColor("#66ff99")))
-    
-    
+
+            self.tableOrders.setItem(row, 6, priority_item)
+            
+            
 # ----------- SEARCH ---------
     def search_orders(self):
     #Search for orders by ID or product name. Emits messages through the status bar.
@@ -122,7 +133,7 @@ class OrdersView(QWidget):
                     self.tableOrders.setRowCount(0)
                     self.statusMessage.emit(f"No order found with ID {text}.", "warning")
                 
-                # Search by product name
+            # Search by product name
             else:
                 orders = ProductionOrderRepository.get_all_orders()
                 filtered = []
