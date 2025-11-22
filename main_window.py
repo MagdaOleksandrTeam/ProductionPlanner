@@ -2,6 +2,7 @@ from PyQt6 import uic
 from PyQt6.QtCore import QTimer
 from PyQt6.QtWidgets import QMainWindow, QButtonGroup, QPushButton
 from views import DashboardView, MaterialView, ProductView, BOMView, MachineView, OrdersView, MRPView, ScheduleView, ReportsView
+from services.scheduling_service import SchedulingService
 
 
 class MainWindow(QMainWindow):
@@ -13,6 +14,9 @@ class MainWindow(QMainWindow):
         with open("assets/app.qss", "r") as f:
             self.setStyleSheet(f.read())
 
+        # connect SchedulingService
+        self.scheduling_service = SchedulingService()
+
         # Initialize all views
         self.dashboard_page = DashboardView()
         self.material_page = MaterialView()
@@ -21,7 +25,7 @@ class MainWindow(QMainWindow):
         self.machine_page = MachineView()
         self.orders_page = OrdersView()
         self.mrp_page = MRPView()
-        self.schedule_page = ScheduleView()
+        self.schedule_page = ScheduleView(self.scheduling_service)
         self.reports_page = ReportsView()
 
         # Map sidebar buttons to their pages
