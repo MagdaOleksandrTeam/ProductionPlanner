@@ -18,6 +18,8 @@ class ConnectionManager:
         if self._connection is None:
             DB_PATH.parent.mkdir(exist_ok=True)
             self._connection = sqlite3.connect(DB_PATH)
+            # Enable foreign key constraints
+            self._connection.execute("PRAGMA foreign_keys = ON")
         return self._connection
     
     def close_connection(self):

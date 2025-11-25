@@ -25,8 +25,8 @@ class BOMRepository:
                     product_id INTEGER NOT NULL,
                     material_id INTEGER NOT NULL,
                     quantity_needed REAL NOT NULL,
-                    FOREIGN KEY (product_id) REFERENCES products(id),
-                    FOREIGN KEY (material_id) REFERENCES materials(id),
+                    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+                    FOREIGN KEY (material_id) REFERENCES materials(id) ON DELETE CASCADE,
                     UNIQUE(product_id, material_id)
                 );
             """)
