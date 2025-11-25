@@ -48,6 +48,17 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btnUpdate">
+        <property name="text">
+         <string>Update</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../assets/icons/update.svg</normaloff>../assets/icons/update.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnReload">
         <property name="text">
          <string>Reload</string>
