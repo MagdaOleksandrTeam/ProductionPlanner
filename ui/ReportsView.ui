@@ -28,6 +28,39 @@
     </widget>
    </item>
    <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="lblInfo">
+        <property name="text">
+         <string>Select report type:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cb_report_type">
+        <item>
+         <property name="text">
+          <string>Orders</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Shortage</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QWidget" name="widget_container" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -130,7 +163,41 @@
           </widget>
          </item>
          <item>
-          <widget class="QTableWidget" name="tableReportPreview"/>
+          <widget class="QTableWidget" name="tableReportPreview">
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Order Id</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Machine</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Status</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Start time</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>End time</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Duration (h)</string>
+            </property>
+           </column>
+          </widget>
          </item>
         </layout>
        </widget>
