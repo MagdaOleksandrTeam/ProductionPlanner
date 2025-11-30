@@ -199,6 +199,16 @@
            </column>
           </widget>
          </item>
+         <item>
+          <widget class="QLabel" name="lblHint">
+           <property name="text">
+            <string>💡 After changing report type, click &quot;Generate Report&quot; to refresh.</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
