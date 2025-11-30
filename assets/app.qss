@@ -80,6 +80,39 @@ QFrame#frame_info QLabel{
     color: #333333;
 }
 
+/* ============= TABLE ============== */
+QTableWidget#tableDashboard {
+    background-color: #ffffff;
+    gridline-color: #d0d4da;
+    font-size: 13px;
+    border: 1px solid #ccc;
+}
+
+QHeaderView::section {
+    background-color: #e6e9ef;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333333;
+    padding: 4px;
+    border: 1px solid #d0d4da;
+}
+
+
+/* ============== PROGRESS BAR ============ */
+QProgressBar {
+    border: 2px solid #5A9BD5;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #E3F2FD;
+}
+
+QProgressBar::chunk {
+    border-radius: 8px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #6EC8FF, stop:1 #3A91FF);
+}
+
 /* ============== DIALOGS ============ */
 QDialog {
     background-color: #F4F5F7;

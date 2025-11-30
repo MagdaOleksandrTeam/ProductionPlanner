@@ -11,3 +11,5 @@ class DashboardView(QWidget):
         
     def load_view(self):
         self.statusMessage.emit("Dashboard loaded!", "info")
+
+        
