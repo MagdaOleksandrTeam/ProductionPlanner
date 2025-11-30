@@ -3,7 +3,7 @@ from models.order import ProductionOrderRepository
 from models.machine import MachineRepository
 from services.mrp_service import MRPService
 
-class Reports:
+class ReportsService:
     """Class responsible for fetching, filtering, and preparing report data."""
 
     def __init__(self):

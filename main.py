@@ -10,6 +10,7 @@ from models.order import ProductionOrder, ProductionOrderRepository, OrderStatus
 from models.production_plan import ProductionPlanRepository
 from services.scheduling_service import SchedulingService
 from services.mrp_service import MRPService
+from services.dashboard_service import DashboardService
 from datetime import date, timedelta
 
 def showcase_materials():
@@ -989,6 +990,40 @@ def showcase_mrp():
     print("\n" + "="*80)
     print("MRP SHOWCASE COMPLETE")
     print("="*80)
+    
+def showcase_dashboard():
+    print("="*50)
+    print("DASHBOARD SHOWCASE")
+    print("="*50)
+
+    # 1️⃣ KPI
+    counts = DashboardService.get_kpi_counts()
+    print("\nKPI COUNTS:")
+    print(f"{counts['pending_label']:<25} : {counts['pending_orders']}")
+    print(f"{counts['in_progress_label']:<25} : {counts['orders_in_progress']}")
+    print(f"{counts['completed_label']:<25} : {counts['completed_orders']}")
+    print(f"{counts['late_label']:<25} : {counts['late_orders']}")
+
+    print("\nQueued Orders by Priority:")
+    print(f"  {counts['priority_high_label']:<10} : {counts['queued_orders_by_priority'][1]}")
+    print(f"  {counts['priority_medium_label']:<10} : {counts['queued_orders_by_priority'][2]}")
+    print(f"  {counts['priority_low_label']:<10} : {counts['queued_orders_by_priority'][3]}")
+
+    # 2️⃣ Orders Status Overview
+    table_data = DashboardService.get_orders_status_overview()
+    print("\nORDERS STATUS OVERVIEW:")
+    if not table_data:
+        print("No orders found.")
+        return
+
+    headers = ["Order ID", "Product", "Quantity", "Priority", "Status", "Deadline"]
+    print(" | ".join(headers))
+    print("-"*60)
+
+    for row in table_data:
+        print(f"{row['order_id']} | {row['product']} | {row['quantity']} | {row['priority']} | {row['status']} | {row['deadline']}")
+
+    print("="*50)
 
 
 def showcase():
@@ -1019,6 +1054,7 @@ def showcase():
     # Showcase MRP (Material Requirements Planning)
     showcase_mrp()
     
+    showcase_dashboard()
     # Don't close database here - let Qt app use the same connection
     print("\nDatabase showcase completed. Starting Qt application...")
 

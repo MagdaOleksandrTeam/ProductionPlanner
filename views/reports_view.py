@@ -1,7 +1,7 @@
 from PyQt6 import uic
 from PyQt6.QtCore import pyqtSignal, QDate
 from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QFileDialog
-from models.report import Reports
+from services.report_service import ReportsService
 from datetime import datetime
 
 from reportlab.lib import colors
@@ -20,7 +20,7 @@ class ReportsView(QWidget):
         uic.loadUi("ui/ReportsView.ui", self)
 
         # Assign the report service (model)
-        self.reports_service = report_service or Reports()
+        self.reports_service = report_service or ReportsService()
 
         # Connect buttons and combobox
         self.btn_generate_report.clicked.connect(self.generate_report)
