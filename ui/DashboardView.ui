@@ -237,7 +237,7 @@ QLabel {
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="btn_refresh_dashboard">
         <property name="text">
          <string>Refresh</string>
         </property>
