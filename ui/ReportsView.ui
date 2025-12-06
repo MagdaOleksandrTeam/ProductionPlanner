@@ -52,7 +52,7 @@
         </item>
         <item>
          <property name="text">
-          <string>Shortage</string>
+          <string>Stock</string>
          </property>
         </item>
        </widget>

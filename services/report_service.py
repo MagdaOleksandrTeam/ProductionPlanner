@@ -13,12 +13,12 @@ class ReportsService:
         """
         Returns a list of dicts with report data and a list of columns.
         - Orders: filtered by dates, machine and status.
-        - Shortage: list of materials below threshold.
+        - Stock: full MRP result: stock, needed, shortage
         """
         if report_type.lower() == "orders":
             return self._get_filtered_orders(start_date, end_date, machine_id, status)
-        elif report_type.lower() == "shortage":
-            return self._get_shortage_data()
+        elif report_type.lower() == "stock":
+            return self._get_stock_data()
         else:
             return [], []
 
@@ -62,19 +62,25 @@ class ReportsService:
         columns = ["Order Id", "Machine", "Status", "Start time", "End time", "Duration (h)"]
         return result, columns
 
-    def _get_shortage_data(self):
-        """Returns list of materials with shortages from MRPService."""
-        
-        shortage_materials = MRPService.generate_procurement_plan()['shortage_materials']
-        
-        data = []
-        for m in shortage_materials:
-            data.append({
-                'material': m.material_name,
-                'stock': m.quantity_in_stock,
-                'required': m.quantity_needed,
-                'shortage': m.quantity_difference,
+    def _get_stock_data(self):
+        """Returns FULL MRP material overview:
+        - material
+        - quantity in stock
+        - quantity needed
+        - shortage (negative = surplus)
+        """
+        mrp = MRPService.generate_procurement_plan()
+
+        all_materials = mrp['all_materials']
+
+        rows = []
+        for m in all_materials:
+            rows.append({
+                "material": m.material_name,
+                "stock": m.quantity_in_stock,
+                "required": m.quantity_needed,
+                "difference": m.quantity_difference,  # minus = surplus, plus = shortage
             })
-        
-        columns = ["Material", "Stock", "Required", "Shortage"]
-        return data, columns
+
+        columns = ["Material", "In Stock", "Required", "Difference"]
+        return rows, columns

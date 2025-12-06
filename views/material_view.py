@@ -79,6 +79,13 @@ class MaterialView(QWidget):
         dialog = MaterialDialog()
         if dialog.exec():  # clicked save
             new_material = dialog.get_material()
+            
+            # Duplicate check
+            existing = MaterialRepository.get_material_by_name(new_material.name)
+            if existing:
+                self.statusMessage.emit("Material already exists", "warning")
+                return
+            
             MaterialRepository.add_material(new_material)
             self.load_materials() # reload
             self.statusMessage.emit("Material added successfully!", "success")
