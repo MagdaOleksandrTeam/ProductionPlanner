@@ -398,10 +398,3 @@ class ConfirmDialog(QDialog):
         self.lblMessage.setText(message)
         self.btn_confirm_dialog.accepted.connect(self.accept)
         self.btn_confirm_dialog.rejected.connect(self.reject)
-        
-        
-        
-#calculator ststuses        
-#self.show_local_status("No recipe data available for this product.", "warning")
-
-#self.show_local_status("Estimation completed successfully!", "success")
