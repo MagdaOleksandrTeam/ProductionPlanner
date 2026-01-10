@@ -385,3 +385,176 @@ class TestDataIntegrity:
         completed = ProductionOrderRepository.get_orders_by_status("completed")
         assert len(completed) == 1
         assert completed[0].quantity == 30
+
+
+class TestUnitMaterial:
+    """Unit tests for Material class and operations."""
+    
+    def test_material_creation(self, test_db):
+        """Test correct Material object creation."""
+        material = Material(id=None, name="Wood", unit="m3", quantity=25.5)
+        assert material.name == "Wood"
+        assert material.unit == "m3"
+        assert material.quantity == 25.5
+    
+    def test_material_validation_name(self, test_db):
+        """Test validation of material data - duplicate name should fail."""
+        material1 = Material(id=None, name="Iron", unit="kg", quantity=10)
+        MaterialRepository.add_material(material1)
+        
+        # Try to add duplicate name
+        with pytest.raises(sqlite3.IntegrityError):
+            material2 = Material(id=None, name="Iron", unit="kg", quantity=20)
+            MaterialRepository.add_material(material2)
+    
+    def test_material_quantity_update(self, test_db):
+        """Test updating material quantity in stock."""
+        material = Material(id=None, name="Plastic", unit="kg", quantity=100)
+        material = MaterialRepository.add_material(material)
+        
+        # Update quantity
+        material.quantity = 150
+        MaterialRepository.update_material(material)
+        
+        updated = MaterialRepository.get_material_by_id(material.id)
+        assert updated.quantity == 150
+
+
+class TestUnitProductionOrder:
+    """Unit tests for ProductionOrder class and operations."""
+    
+    def test_order_creation(self, test_db):
+        """Test correct ProductionOrder object creation."""
+        product = Product(id=None, name="TestProd", unit="pcs", description="Test")
+        product = ProductRepository.add_product(product)
+        
+        order = ProductionOrder(
+            id=None, product_id=product.id, quantity=50,
+            deadline="2026-02-15", status="in_queue", priority=1
+        )
+        order = ProductionOrderRepository.add_order(order)
+        
+        assert order.id is not None
+        assert order.quantity == 50
+        assert order.status == "in_queue"
+    
+    def test_order_validation_quantity(self, test_db):
+        """Test validation - quantity must be positive."""
+        product = Product(id=None, name="Widget2", unit="pcs", description="Test")
+        product = ProductRepository.add_product(product)
+        
+        # Negative quantity should fail
+        with pytest.raises(sqlite3.IntegrityError):
+            order = ProductionOrder(
+                id=None, product_id=product.id, quantity=-5,
+                deadline="2026-02-15", status="in_queue", priority=1
+            )
+            ProductionOrderRepository.add_order(order)
+    
+    def test_order_status_change(self, test_db):
+        """Test changing order status from in_queue to in_progress."""
+        product = Product(id=None, name="Item", unit="pcs", description="Test")
+        product = ProductRepository.add_product(product)
+        
+        order = ProductionOrder(
+            id=None, product_id=product.id, quantity=25,
+            deadline="2026-03-01", status="in_queue", priority=2
+        )
+        order = ProductionOrderRepository.add_order(order)
+        
+        # Change status
+        order.status = "in_progress"
+        ProductionOrderRepository.update_order(order)
+        
+        updated = ProductionOrderRepository.get_order_by_id(order.id)
+        assert updated.status == "in_progress"
+
+
+class TestUnitMRPService:
+    """Unit tests for MRP service calculations."""
+    
+    def test_mrp_no_orders(self, test_db):
+        """Test MRP with no pending orders."""
+        from services.mrp_service import MRPService
+        
+        requirements = MRPService.calculate_material_requirements()
+        assert len(requirements) == 0
+    
+    def test_mrp_with_order_and_bom(self, test_db):
+        """Test MRP calculation with order and BOM."""
+        from services.mrp_service import MRPService
+        
+        # Create material
+        material = Material(id=None, name="Steel", unit="kg", quantity=10)
+        material = MaterialRepository.add_material(material)
+        
+        # Create product
+        product = Product(id=None, name="Part", unit="pcs", description="Test")
+        product = ProductRepository.add_product(product)
+        
+        # Create BOM
+        from models.bom import BOM, BOMRepository
+        bom = BOM(id=None, product_id=product.id, material_id=material.id, quantity_needed=2.0)
+        BOMRepository.add_bom(bom)
+        
+        # Create order
+        order = ProductionOrder(
+            id=None, product_id=product.id, quantity=10,
+            deadline="2026-02-20", status="in_queue", priority=1
+        )
+        ProductionOrderRepository.add_order(order)
+        
+        # Calculate requirements
+        requirements = MRPService.calculate_material_requirements()
+        
+        # Should find requirements for Steel
+        assert len(requirements) > 0
+        steel_req = next((r for r in requirements if r.material_name == "Steel"), None)
+        assert steel_req is not None
+        assert steel_req.quantity_needed == 20.0  # 10 parts * 2 kg each
+
+
+class TestUnitSchedulingService:
+    """Unit tests for Scheduling service."""
+    
+    def test_scheduling_no_orders(self, test_db):
+        """Test scheduling with no pending orders."""
+        from services.scheduling_service import SchedulingService
+        
+        plans = SchedulingService.generate_plan_from_scratch()
+        assert len(plans) == 0
+    
+    def test_scheduling_assigns_machine(self, test_db):
+        """Test that scheduling assigns orders to machines."""
+        from services.scheduling_service import SchedulingService
+        from models.machine import Machine, MachineRecipe, MachineRepository, MachineRecipeRepository
+        
+        # Create machine
+        machine = Machine(id=None, name="Machine1")
+        machine = MachineRepository.add_machine(machine)
+        
+        # Create product
+        product = Product(id=None, name="Widget", unit="pcs", description="Test")
+        product = ProductRepository.add_product(product)
+        
+        # Create recipe
+        recipe = MachineRecipe(
+            id=None, machine_id=machine.id, 
+            product_id=product.id, production_capacity=5.0
+        )
+        MachineRecipeRepository.add_machine_recipe(recipe)
+        
+        # Create order
+        order = ProductionOrder(
+            id=None, product_id=product.id, quantity=10,
+            deadline="2026-02-25", status="in_queue", priority=1
+        )
+        ProductionOrderRepository.add_order(order)
+        
+        # Generate schedule
+        plans = SchedulingService.generate_plan_from_scratch()
+        
+        # Should create at least one plan
+        assert len(plans) > 0
+        assert plans[0].machine_id == machine.id
+        assert plans[0].order_id == order.id

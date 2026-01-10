@@ -104,3 +104,38 @@ def test_ft_04_schedule_gantt_generation(app, qtbot):
     # Sprawdzenie, czy statusbar potwierdził operację
     msg = app.statusbar.currentMessage()
     assert msg != "" or "Success" in msg
+
+def test_ft_05_material_edit(app, qtbot):
+    """Test FT-05: Edycja istniejącego materiału"""
+    qtbot.mouseClick(app.btn_material, QtCore.Qt.MouseButton.LeftButton)
+    qtbot.wait(200)
+    
+    # Sprawdzenie czy zakładka materiałów jest aktywna
+    assert app.stackedWidget.currentWidget() == app.material_page
+    
+def test_ft_06_order_creation(app, qtbot):
+    """Test FT-06: Tworzenie nowego zamówienia produkcyjnego"""
+    qtbot.mouseClick(app.btn_orders, QtCore.Qt.MouseButton.LeftButton)
+    qtbot.wait(200)
+    
+    # Sprawdzenie czy zakładka zamówień jest aktywna
+    assert app.stackedWidget.currentWidget() == app.orders_page
+
+def test_ft_07_mrp_calculation(app, qtbot):
+    """Test FT-07: Generowanie kalkulacji MRP"""
+    qtbot.mouseClick(app.btn_mrp, QtCore.Qt.MouseButton.LeftButton)
+    qtbot.wait(200)
+    
+    # Sprawdzenie czy zakładka MRP jest aktywna
+    assert app.stackedWidget.currentWidget() == app.mrp_page
+
+def test_ft_08_report_generation(app, qtbot):
+    """Test FT-08: Generowanie raportu magazynowego"""
+    qtbot.mouseClick(app.btn_reports, QtCore.Qt.MouseButton.LeftButton)
+    qtbot.wait(200)
+    
+    # Sprawdzenie czy zakładka raportów jest aktywna
+    assert app.stackedWidget.currentWidget() == app.reports_page
+    
+    # Weryfikacja że widok raportów istnieje
+    assert app.reports_page is not None

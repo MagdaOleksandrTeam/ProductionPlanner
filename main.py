@@ -1064,7 +1064,7 @@ if __name__ == "__main__":
     # Initialize database (creates file and directory)
     init_db()
     
-    showcase()
+    #showcase()
 
 
     app = QApplication(sys.argv)
