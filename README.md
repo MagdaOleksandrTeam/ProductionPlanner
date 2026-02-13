@@ -69,7 +69,7 @@ The application utilizes the **Repository Pattern** and **Singleton** pattern fo
 ## ⚙️ Installation
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/](https://github.com/)[TWOJA-NAZWA-UZYTKOWNIKA]/ProductionPlanner.git
+   git clone https://github.com/MagdaOleksandrTeam/ProductionPlanner.git
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
